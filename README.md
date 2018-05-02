@@ -32,7 +32,7 @@ You can install and run alerthub with some simple steps:
 1. Clone this repository or get the latest release version
 2. Navigate to the folder, and run `npm install` to install dependencies
 3. Run `npm run init` to copy the configuration file
-4. Edit `src/config.js`, and fill your credentials.
+4. Edit `etc/config.js`, and fill your credentials.
 5. Run `npm start` or something like `pm2 start npm -- start` and run the application.
 
 TODOs
