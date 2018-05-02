@@ -50,5 +50,7 @@ Buy me a coffee or beer!
 Donations are kindly accepted to help develop my projects further.
 
 BTC: 1QFHeSrhWWVhmneDBkArKvpmPohRjpf7p6
+
 ETH / ERC20 Tokens: 0x3C2b0AC49257300DaB96dF8b49d254Bb696B3458
+
 NEO / Nep5 Tokens: AYbHEah5Y4J6BV8Y9wkWJY7cCyHQameaHc
