@@ -2,10 +2,11 @@
   "name": "alerthub",
   "version": "1.0.0",
   "description": "A plugin to send notification when a new version of a package is released",
-  "main": "index.js",
+  "main": "./src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "init": "cp config.example.js config.js"
+    "init": "cp ./etc/config.example.js ./etc/config.js",
+    "start": "node ./src/index.js"
   },
   "author": "Arda Kilicdagi",
   "license": "MIT",
@@ -19,5 +20,8 @@
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.11.0"
+  },
+  "engines": {
+    "node": ">=8.0.0"
   }
 }

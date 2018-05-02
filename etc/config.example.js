@@ -16,11 +16,10 @@ module.exports = {
           pass: 'password',
         },
       },
-      // tls: true,
       mailOptions: {
         from: '"AlertHub" <smtp@user.com>', // from field, can be pure e-mail or "Name" <e-mail> format
         to: 'your@email.com', // Your Email, can add more e-mails by commas
-        subjectPrefix: 'New Release', // Subject prefix
+        subjectPrefix: 'New GitHub Release', // Subject prefix
       },
     },
   },

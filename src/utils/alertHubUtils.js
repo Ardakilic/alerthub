@@ -3,7 +3,8 @@ const striptags = require('striptags');
 const PushBullet = require('pushbullet');
 const mail = require('nodemailer');
 
-// Because there's external feeds supported, we need this
+// Because there's external feeds supported
+// we need this method to check whether the feed is from GitHub or not
 function isFeedFromGitHub(item) {
   if (item.guid !== undefined && item.guid !== null && typeof item.guid === 'string') {
     if (item.guid.substring(0, 14) === 'tag:github.com') {
@@ -54,7 +55,7 @@ async function sendPushNotification(config, feedData) {
           return false;
         }
         // console.log('Push notification sent successfully!');
-        return true;
+        return response;
       }
     );
   }
@@ -62,7 +63,7 @@ async function sendPushNotification(config, feedData) {
   return false;
 }
 
-
+// Sends and e-mail notification to provided user
 async function sendEmailNotification(config, feedData) {
   if (config.notifications.smtp.enabled === true) {
     const transporter = mail.createTransport(config.notifications.smtp.config);
@@ -74,7 +75,7 @@ async function sendEmailNotification(config, feedData) {
       }
       // successful smtp
     }); */
-
+    // E-mail options that will be used by nodemailer
     const mailOptions = {
       from: config.notifications.smtp.mailOptions.from,
       to: config.notifications.smtp.mailOptions.to,
@@ -90,7 +91,7 @@ async function sendEmailNotification(config, feedData) {
         return false;
       }
       // console.log('Message sent: %s', info.messageId);
-      return true;
+      return info;
     });
   }
 

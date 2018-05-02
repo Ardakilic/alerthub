@@ -58,4 +58,4 @@ typings/
 .env
 
 # App-spesific
-config.js
+etc/config.js
