@@ -35,6 +35,10 @@ You can install and run alerthub with some simple steps:
 4. Edit `etc/config.js`, and fill your credentials.
 5. Run `npm start` or something like `pm2 start npm -- start` and run the application.
 
+Docker
+--------
+You can also run alerthub through a Docker container. See [kmlucy/docker-alerthub](https://github.com/kmlucy/docker-alerthub).
+
 TODOs
 --------
 * A portable storage solution such as SQLite etc.
