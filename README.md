@@ -15,42 +15,53 @@ When you watch a release, you also auto watch the issues and comments etc., howe
 
 There's been a service called sibbell.com, but they'll be shutting down on 15th May, 2018. That's why, I decided to make one for myself.
 
-This simple cli tool watches the releases set in config, and notifies you with E-mail or PushBullet.
+This simple cli tool watches the releases set in config, and notifies you with E-mail or PushBullet, and provides you an aggregated RSS feed which you can usein IFTTT or your personal feed reader.
 
-Requirements
---------
+## Requirements
+
 * NodeJS 8.x or newer
 * (Optional) PushBullet Api Key
 * (Optional) SMTP credentials
 
-Either one of the PushBullet or the SMTP credentials are required to get notifications.
+Either one of the PushBullet or the SMTP credentials are required to get notifications. RSS feed doesn't require neither.
 
-Installation
---------
-You can install and run alerthub with some simple steps:
+## Installation
+
+You can install and run AlertHub with some simple steps:
 
 1. Clone this repository or get the latest release version
 2. Navigate to the folder, and run `npm install` to install dependencies
 3. Run `npm run init` to copy the configuration file
-4. Edit `etc/config.js`, and fill your credentials.
+4. Edit `/etc/config.js`, and fill your credentials.
 5. Run `npm start` or something like `pm2 start npm -- start` and run the application.
 
-Docker
---------
+## Docker Container
+
 You can also run alerthub through a Docker container. See [kmlucy/docker-alerthub](https://github.com/kmlucy/docker-alerthub).
 
-TODOs
---------
+
+## Changelog
+
+I'll keep track of each release in the [CHANGELOG.md](./CHANGELOG.md)
+
+## Upgrading
+
+Please refer to [UPGRADING.md](./UPGRADING.md)
+
+## TODOs / Plans
+
 * A portable storage solution such as SQLite etc.
 * Multi user feature
+* ~~Aggregated RSS~~
+* Following commits (all or a specific branch) and tags in addition to releases.
 * [You say!](https://github.com/Ardakilic/alerthub/issues/new)
 
-License
---------
+## License
+
 MIT
 
-Buy me a coffee or beer!
---------
+## Buy me a coffee or beer!
+
 Donations are kindly accepted to help develop my projects further.
 
 BTC: 1QFHeSrhWWVhmneDBkArKvpmPohRjpf7p6
