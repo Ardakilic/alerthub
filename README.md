@@ -35,12 +35,12 @@ You can install and run AlertHub with some simple steps:
 4. Edit `/etc/config.js`, and fill your credentials.
 5. Run `npm start` or something like `pm2 start npm -- start` and run the application.
 
-## Docker Container
+## Docker Container
 
 You can also run alerthub through a Docker container. See [kmlucy/docker-alerthub](https://github.com/kmlucy/docker-alerthub).
 
 
-## Changelog
+## Changelog
 
 I'll keep track of each release in the [CHANGELOG.md](./CHANGELOG.md)
 
@@ -48,7 +48,7 @@ I'll keep track of each release in the [CHANGELOG.md](./CHANGELOG.md)
 
 Please refer to [UPGRADING.md](./UPGRADING.md)
 
-## TODOs / Plans
+## TODOs / Plans
 
 * A portable storage solution such as SQLite etc.
 * Multi user feature
@@ -56,11 +56,11 @@ Please refer to [UPGRADING.md](./UPGRADING.md)
 * Following commits (all or a specific branch) and tags in addition to releases.
 * [You say!](https://github.com/Ardakilic/alerthub/issues/new)
 
-## License
+## License
 
 MIT
 
-## Buy me a coffee or beer!
+## Buy me a coffee or beer!
 
 Donations are kindly accepted to help develop my projects further.
 

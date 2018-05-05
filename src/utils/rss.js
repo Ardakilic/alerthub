@@ -2,7 +2,7 @@ const RssBraider = require('rss-braider');
 const path = require('path');
 
 // Creates a RSS feed from the configuration provided
-async function createRSSFeed(config) {
+function createRSSFeed(config) {
   if (config.rss.enabled === true) {
     const AlertHubFeeds = {
       alertHub: {
