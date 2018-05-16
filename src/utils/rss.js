@@ -1,4 +1,4 @@
-const RssBraider = require('rss-braider');
+const rssBraider = require('rss-braider');
 const path = require('path');
 
 // Creates a RSS feed from the configuration provided
@@ -21,11 +21,27 @@ function createRSSFeed(config) {
       },
     };
 
-    config.repositories.forEach((feed) => {
+    config.repositories.releases.forEach((feed) => {
       AlertHubFeeds.alertHub.sources.push({
-        name: feed, // this is actually user/repo string
+        name: `r-${feed}`, // this is actually the user/repo string
         count: config.rss.includeFromEachRepository,
         feed_url: `https://github.com/${feed}/releases.atom`,
+      });
+    });
+
+    config.repositories.tags.forEach((feed) => {
+      AlertHubFeeds.alertHub.sources.push({
+        name: `t-${feed}`, // this is actually the user/repo string
+        count: config.rss.includeFromEachRepository,
+        feed_url: `https://github.com/${feed}/tags.atom`,
+      });
+    });
+
+    config.repositories.commits.forEach((feed) => {
+      AlertHubFeeds.alertHub.sources.push({
+        name: `c-${feed}`, // this is actually the user/repo string
+        count: config.rss.includeFromEachRepository,
+        feed_url: `https://github.com/${feed}/commits.atom`,
       });
     });
 
@@ -45,7 +61,7 @@ function createRSSFeed(config) {
       plugins_directories: [path.join(__dirname, '..', 'plugins', 'rss-braider')],
     };
 
-    const rssClient = RssBraider.createClient(braiderOptions);
+    const rssClient = rssBraider.createClient(braiderOptions);
 
     // Override logging level (debug, info, warn, err, off)
     rssClient.logger.level('info');
@@ -67,7 +83,8 @@ function createRSSFeed(config) {
     return process;
   }
 
-  return ''; // If RSS output is disabled, empty string will be returned
+  // If RSS output is disabled, empty string will be returned
+  return Promise.resolve('');
 }
 
 module.exports = {

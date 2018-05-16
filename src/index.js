@@ -17,9 +17,23 @@ const bootDate = new Date();
 console.log(`Application booted at ${bootDate}`);
 
 // First, let's add all the feed lists
-config.repositories.forEach((feed) => {
+config.repositories.releases.forEach((feed) => {
   feeder.add({
     url: `https://github.com/${feed}/releases.atom`,
+    refresh: config.interval,
+  });
+});
+
+config.repositories.tags.forEach((feed) => {
+  feeder.add({
+    url: `https://github.com/${feed}/tags.atom`,
+    refresh: config.interval,
+  });
+});
+
+config.repositories.commits.forEach((feed) => {
+  feeder.add({
+    url: `https://github.com/${feed}/commits.atom`,
     refresh: config.interval,
   });
 });

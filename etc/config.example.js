@@ -33,13 +33,21 @@ module.exports = {
     site_url: 'https://github.com/Ardakilic/alerthub', // Site url shown on the feed
     feed_url: null, // Fills: <atom:link href="feedurl" rel="self" type="application/rss+xml"/>
   },
-  repositories: [
-    'ardakilic/alerthub', // can be resolved as https://github.com/ardakilic/alerthub
-    'expressjs/express',
-    'Unitech/pm2',
-    'facebook/react',
-  ],
+  repositories: {
+    releases: [
+      'ardakilic/alerthub', // can be resolved as https://github.com/ardakilic/alerthub
+      'expressjs/express',
+      'Unitech/pm2',
+      'facebook/react',
+    ],
+    tags: [
+
+    ],
+    commits: [
+
+    ],
+  },
   extras: [
-    // direct rss links from other sources if you want to watch in this tool
+    // direct rss links from other sources if you want to watch with this tool
   ],
 };
