@@ -1,14 +1,14 @@
 /* eslint no-console: ["error", { allow: ["warn", "error", "log"] }] */
 
 // First, let's require the libraries
+const RssFeedEmitter = require('rss-feed-emitter');
+const http = require('http');
+
 const config = require('../etc/config');
 const alertHubUtils = require('./utils/alertHub');
 const pushNotificationUtils = require('./utils/pushNotification');
 const emailUtils = require('./utils/email');
 const rssUtils = require('./utils/rss');
-const RssFeedEmitter = require('rss-feed-emitter');
-
-const http = require('http');
 
 // RSS Feed emitter to watch and parse feed
 const feeder = new RssFeedEmitter();
@@ -51,7 +51,7 @@ config.extras.forEach((feed) => {
   refresh: 2000,
 }); */
 
-// Firsr, the notification part to alert the user
+// First, the notification part to alert the user
 feeder.on('new-item', async (item) => {
   // console.log(item);
 
@@ -59,7 +59,7 @@ feeder.on('new-item', async (item) => {
   // This may cause serious notification/mail traffic after a possible crash
   // That's why we make a simple time check to make sure feeds are new
   const date = new Date(item.date);
-  // Let's compare the dates and make sure the feed a new feed.
+  // Let's compare the dates and make sure the feed is a new feed.
   if (date.getTime() > bootDate.getTime()) {
     console.log(`New release found! ${item.title}!`);
 

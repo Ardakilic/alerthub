@@ -1,4 +1,4 @@
-// Because there's external feeds supported
+// Because there's external feeds supported,
 // we need this method to check whether the feed is from GitHub or not
 function isFeedFromGitHub(item) {
   if (item.guid !== undefined && item.guid !== null && typeof item.guid === 'string') {
