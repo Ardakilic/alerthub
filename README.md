@@ -17,6 +17,8 @@ There's been a service called sibbell.com, but they shut down on 15th May, 2018.
 
 This simple cli tool watches the releases set in config, and notifies you with E-mail or PushBullet, and provides you an aggregated RSS feed which you can use in IFTTT or your personal feed reader.
 
+**Update 2018.11.28:** GitHub now supports following the repositories' releases, however, they still don't cover the push notifiction feature which this tool offers.
+
 ## Requirements
 
 * NodeJS 8.x or newer
@@ -51,6 +53,7 @@ Please refer to [UPGRADING.md](./UPGRADING.md).
 ## TODOs / Plans
 
 * A portable storage solution such as SQLite etc.
+* Following GitLab and BitBucket releases
 * Multi user feature
 * ~~Aggregated RSS~~
 * ~~Following commits and tags in addition to releases.~~
