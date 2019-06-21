@@ -15,7 +15,7 @@
     "url": "https://github.com/Ardakilic/alerthub.git"
   },
   "dependencies": {
-    "nodemailer": "^4.7.0",
+    "nodemailer": "^6.0.0",
     "pushbullet": "^2.3.0",
     "rss-braider": "^1.2.4",
     "rss-feed-emitter": "^2.0.1",
