@@ -1,6 +1,6 @@
 {
   "name": "alerthub",
-  "version": "1.2.1",
+  "version": "1.3.0",
   "description": "A tool to send notification when a new version of a package is released",
   "main": "./src/index.js",
   "scripts": {
@@ -15,16 +15,17 @@
     "url": "https://github.com/Ardakilic/alerthub.git"
   },
   "dependencies": {
-    "nodemailer": "^6.0.0",
-    "pushbullet": "^2.3.0",
+    "nodemailer": "^6.4.2",
+    "pushbullet": "^2.4.0",
     "rss-braider": "^1.2.4",
-    "rss-feed-emitter": "^2.0.1",
-    "striptags": "^3.1.1"
+    "rss-feed-emitter": "github:filipedeschamps/rss-feed-emitter#master",
+    "striptags": "^3.1.1",
+    "pushover-notifications": "^1.2.1"
   },
   "devDependencies": {
-    "eslint": "^6.0.0",
+    "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-plugin-import": "^2.14.0"
+    "eslint-plugin-import": "^2.20.0"
   },
   "engines": {
     "node": ">=8.0.0"

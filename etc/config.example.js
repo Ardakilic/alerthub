@@ -5,6 +5,13 @@ module.exports = {
       enabled: false,
       accessToken: 'XXX',
     },
+    pushover: {
+      enabled: false,
+      config: {
+        user: 'PUSHOVER_USER',
+        token: 'PUSHOVER_TOKEN',
+      }
+    },
     smtp: {
       enabled: true,
       config: { // Nodemailer configuration
@@ -35,7 +42,7 @@ module.exports = {
   },
   repositories: {
     releases: [
-      'ardakilic/alerthub', // can be resolved as https://github.com/ardakilic/alerthub
+      'Ardakilic/alerthub', // can be resolved as https://github.com/Ardakilic/alerthub
       'expressjs/express',
       'Unitech/pm2',
       'facebook/react',

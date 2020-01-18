@@ -6,7 +6,8 @@ const http = require('http');
 
 const config = require('../etc/config');
 const alertHubUtils = require('./utils/alertHub');
-const pushNotificationUtils = require('./utils/pushNotification');
+const pushBulletUtils = require('./utils/pushBullet');
+const pushOverUtils = require('./utils/pushOver');
 const emailUtils = require('./utils/email');
 const rssUtils = require('./utils/rss');
 
@@ -65,9 +66,12 @@ feeder.on('new-item', async (item) => {
 
     const feedData = alertHubUtils.parseFeedData(item);
 
-    // First, try to send the push notification
+    // First, try to send the push notifications
     if (config.notifications.pushbullet.enabled === true) {
-      await pushNotificationUtils.sendPushNotification(config, feedData);
+      await pushBulletUtils.sendPushNotification(config, feedData);
+    }
+    if(config.notifications.pushover.enabled === true) {
+      await pushOverUtils.sendPushNotification(config, feedData);
     }
 
     // Now try to send the email
@@ -89,5 +93,5 @@ if (config.rss.enabled === true) {
       res.end(rssFeed);
     });
   }).listen(config.rss.port);
-  console.log(`RSS Feed server running at port ${config.rss.port}`);
+  console.log(`AlertHub RSS Feed server running at port ${config.rss.port}`);
 }

@@ -23,9 +23,10 @@ This simple cli tool watches the releases set in config, and notifies you with E
 
 * NodeJS 8.x or newer
 * (Optional) PushBullet Api Key
+* (Optional) PushOver Api Key
 * (Optional) SMTP credentials to dispatch e-mail
 
-Either one of the PushBullet or the SMTP credentials are required to get notifications. RSS feed doesn't require neither.
+Either one of the PushBullet, PushOver or the SMTP credentials are required to get notifications. RSS feed doesn't require none.
 
 ## Installation
 
@@ -57,6 +58,7 @@ Please refer to [UPGRADING.md](./UPGRADING.md).
 * Multi user feature
 * ~~Aggregated RSS~~
 * ~~Following commits and tags in addition to releases.~~
+* ~~PushOver integration~~
 * Following commits from a specific branch
 * [You say!](https://github.com/Ardakilic/alerthub/issues/new)
 
