@@ -1,5 +1,11 @@
 # Upgrading Guide
 
+## 1.2.1 to 1.3.0
+
+- Stop the application.
+- Copy the `notifications.pushover` section from the example config, and alter your configuration file and update for your needs.
+- Re-start the application.
+
 ## 1.1.0 to 1.2.0
 
 - Stop the application.
