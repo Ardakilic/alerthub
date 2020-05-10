@@ -5,7 +5,7 @@ const striptags = require('striptags');
 
 // Send the push notification.
 // Todo: why bother with async / await at all ?
-async function sendPushNotification(config, feedData) {
+async function sendPushBulletNotification(config, feedData) {
   const pusher = new PushBullet(config.notifications.pushbullet.accessToken);
   await pusher.link(
     {},
@@ -22,5 +22,5 @@ async function sendPushNotification(config, feedData) {
 }
 
 module.exports = {
-  sendPushNotification,
+  sendPushBulletNotification,
 };

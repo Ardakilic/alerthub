@@ -5,15 +5,12 @@
 // We need a plug-in to add release name to the title.
 const utils = require('../../utils/alertHub');
 
-module.exports = (item, itemOptions /* , source */) => {
-  if (itemOptions.title !== null) {
-    // console.log('title var');
-    // console.log(itemOptions.guid);
-    if (utils.isFeedFromGitHub(itemOptions) === true) {
-      itemOptions.title = `${utils.getReleaseNameFromGitHubFeedLink(itemOptions.url)} - ${itemOptions.title}`;
-    }
+module.exports = (_item, itemOptions, /* source */) => {
+  if (
+    utils.isFeedFromGitHub(itemOptions) === true
+    || utils.isFeedFromGitLab(itemOptions) === true
+  ) {
+    itemOptions.title = `${utils.getReleaseNameFromGitHubAndGitLabFeedLink(itemOptions.url)} - ${itemOptions.title}`;
   }
-
   return itemOptions;
 };
-

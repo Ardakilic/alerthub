@@ -1,4 +1,5 @@
-// Because there's external feeds supported,
+const URL = require('url');
+// Because there are also feeds,
 // we need this method to check whether the feed is from GitHub or not
 function isFeedFromGitHub(item) {
   if (item.guid !== undefined && item.guid !== null && typeof item.guid === 'string') {
@@ -9,13 +10,18 @@ function isFeedFromGitHub(item) {
   return false;
 }
 
+function isFeedFromGitLab(item) {
+  const parsedURL = URL.parse(item.url);
+  if (parsedURL.hostname === 'gitlab.com') {
+    return true;
+  }
+  return false;
+}
+
 // Because there's no release name in GitHub feed, we steal from URL
-function getReleaseNameFromGitHubFeedLink(link) {
-  // if (isFeedFromGitHub(item)) {
+function getReleaseNameFromGitHubAndGitLabFeedLink(link) {
   const parts = link.split('/');
   return `${parts[3]}/${parts[4]}`;
-  // }
-  // return '';
 }
 
 // Standardize the new feed element
@@ -29,8 +35,8 @@ function parseFeedData(feedData) {
   };
 
   // We need to prepend release name to the title
-  if (isFeedFromGitHub(feedData) === true) {
-    parsedFeed.title = `${getReleaseNameFromGitHubFeedLink(feedData.link)} - ${feedData.title}`;
+  if (isFeedFromGitHub(feedData) === true || isFeedFromGitLab(true)) {
+    parsedFeed.title = `${getReleaseNameFromGitHubAndGitLabFeedLink(feedData.link)} - ${feedData.title}`;
   }
 
   return parsedFeed;
@@ -40,5 +46,6 @@ module.exports = {
   parseFeedData,
   // These bottom two are for rss braider plugin to prepend release name to feed title
   isFeedFromGitHub,
-  getReleaseNameFromGitHubFeedLink,
+  isFeedFromGitLab,
+  getReleaseNameFromGitHubAndGitLabFeedLink,
 };

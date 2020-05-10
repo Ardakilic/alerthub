@@ -12,31 +12,58 @@ const emailUtils = require('./utils/email');
 const rssUtils = require('./utils/rss');
 
 // RSS Feed emitter to watch and parse feed
-const feeder = new RssFeedEmitter();
+const feeder = new RssFeedEmitter({ userAgent: config.userAgent || 'Mozilla/5.0 (Linux x86_64; rv:76.0) Gecko/20100101 Firefox/76.0' });
 
 const bootDate = new Date();
 console.log(`Application booted at ${bootDate}`);
 
-// First, let's add all the feed lists
-config.repositories.releases.forEach((feed) => {
-  feeder.add({
-    url: `https://github.com/${feed}/releases.atom`,
-    refresh: config.interval,
-  });
+// GitHub feeds
+Object.keys(config.repositories.github).forEach((type) => {
+  if (type === 'commits') {
+    Object.keys(config.repositories.github[type]).forEach((feed) => {
+      config.repositories.github[type][feed].forEach((subType) => {
+        if (subType === '*') {
+          feeder.add({
+            url: `https://github.com/${feed}/${type}.atom`,
+            refresh: config.interval,
+          });
+        } else {
+          feeder.add({
+            url: `https://github.com/${feed}/${type}/${subType}.atom`,
+            refresh: config.interval,
+          });
+        }
+      });
+    });
+  } else {
+    config.repositories.github[type].forEach((feed) => {
+      feeder.add({
+        url: `https://github.com/${feed}/${type}.atom`,
+        refresh: config.interval,
+      });
+    });
+  }
 });
 
-config.repositories.tags.forEach((feed) => {
-  feeder.add({
-    url: `https://github.com/${feed}/tags.atom`,
-    refresh: config.interval,
-  });
-});
-
-config.repositories.commits.forEach((feed) => {
-  feeder.add({
-    url: `https://github.com/${feed}/commits.atom`,
-    refresh: config.interval,
-  });
+// GitLab feeds
+Object.keys(config.repositories.gitlab).forEach((type) => {
+  if (type === 'commits') {
+    Object.keys(config.repositories.gitlab[type]).forEach((feed) => {
+      config.repositories.gitlab[type][feed].forEach((subType) => {
+        feeder.add({
+          url: `https://gitlab.com/${feed}/-/${type}/${subType}?format=atom`,
+          refresh: config.interval,
+        });
+      });
+    });
+  } else {
+    config.repositories.gitlab[type].forEach((feed) => {
+      feeder.add({
+        url: `https://gitlab.com/${feed}/-/${type}?format=atom`,
+        refresh: config.interval,
+      });
+    });
+  }
 });
 
 config.extras.forEach((feed) => {
@@ -68,14 +95,13 @@ feeder.on('new-item', async (item) => {
 
     // First, try to send the push notifications
     if (config.notifications.pushbullet.enabled === true) {
-      await pushBulletUtils.sendPushNotification(config, feedData);
+      await pushBulletUtils.sendPushBulletNotification(config, feedData);
     }
-    if(config.notifications.pushover.enabled === true) {
-      await pushOverUtils.sendPushNotification(config, feedData);
+    if (config.notifications.pushover.enabled === true) {
+      await pushOverUtils.sendPushOverNotification(config, feedData);
     }
-
     // Now try to send the email
-    if (config.notifications.smtp.enabled === true) {
+    if (config.notifications.email.enabled === true) {
       await emailUtils.sendEmailNotification(config, feedData);
     }
 
@@ -86,7 +112,7 @@ feeder.on('new-item', async (item) => {
 
 // Let's handle the aggregated RSS part
 if (config.rss.enabled === true) {
-  http.createServer((req, res) => {
+  http.createServer((_req, res) => {
     res.writeHead(200, { 'Content-Type': 'application/xml' });
     // Upon each request, let's fetch the RSS feed string from util
     rssUtils.createRSSFeed(config).then((rssFeed) => {
