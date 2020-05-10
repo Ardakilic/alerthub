@@ -1,5 +1,13 @@
 # Upgrading Guide
 
+## 1.3.0 to 2.0.0
+- Stop the application
+- Backup your configuration file to somewhere outside the application
+- Download the new version, install the dependencies
+- Publish the new configuration file
+- Paste your current repositories to according sections
+- Re-start the application
+
 ## 1.2.1 to 1.3.0
 
 - Stop the application.

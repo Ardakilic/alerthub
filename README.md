@@ -11,7 +11,7 @@ AlertHub
 
 AlertHub is a simple tool written with NodeJS to get alerted from GitHub and GitLab releases, tags and commits.
 
-When you watch a release over GitHub, you also auto watch the issues and comments etc., however if you want to only follow new releases, commits or tags, there isn't a way to achieve this from GitHub directly.
+When you watch a release over GitHub, you also auto watch the issues and comments etc., however if you want to only follow new releases, or only commits or tags, there isn't a way to achieve this from GitHub directly.
 
 There's been a service called sibbell.com, but they shut down on 15th May, 2018. That's why, I decided to make one for myself.
 

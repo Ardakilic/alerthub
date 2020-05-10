@@ -26,7 +26,7 @@ module.exports = {
       },
       mailOptions: {
         from: '"AlertHub" <smtp@user.com>', // from field, can be pure e-mail or "Name" <e-mail> format
-        to: 'your@email.com', // Your Email, can add more e-mails by commas
+        to: 'your@email.com', // Your e-mail, can add more e-mails by commas
         subjectPrefix: 'New GitHub Release', // Subject prefix
       },
     },
@@ -54,7 +54,7 @@ module.exports = {
 
       ],
       commits: {
-        'laravel/laravel': ['*'], // All commits of https://github.com/Laravel/framework regardless of the branch
+        'laravel/laravel': ['*'], // All commits of https://github.com/Laravel/laravel regardless of the branch
         'acikkaynak/acikkaynak': ['master'], // only commits at master branch of https://github.com/acikkaynak/acikkaynak
         'acikkaynak/acikkaynak-website': ['master', 'development'], // master and development branches of https://github.com/acikkaynak/acikkaynak-website
       },

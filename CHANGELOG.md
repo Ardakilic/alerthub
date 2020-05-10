@@ -5,7 +5,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [2.0.0] - 2020-05-10
-### Added
+### Added
 - You can now track GitLab repositories with this tool 🎉
 - You can now follow specific branches' commits from GitHub and GitLab 🎉
 - `config.rss.logLevel` variable added for console output when a new release is found. Values are debug, `info`, `warn`, `err`, `off`
@@ -14,11 +14,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 - All dependencies updated.
 
-### Changed
+### Changed
 - Configuration file changed a bit, so it's strongly suggested to backup the old one, re-publish the new one with `npm run init` and re-fill the required information. Mostly, the `repositories` section now holds separate subsections for GitHub and GitLab.
 
 ## [1.3.0] - 2020-01-18
-### Added
+### Added
 - PushOver feature implemented.
 
 ### Fixed
@@ -29,7 +29,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 - Updated dependency due to CVE-2018-1000620. [Details here](https://github.com/filipedeschamps/rss-feed-emitter/pull/173).
 
-### Changed
+### Changed
 - Other dependencies are updated to newer versions.
 
 ## [1.2.0] - 2018-05-16
