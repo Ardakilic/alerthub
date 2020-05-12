@@ -40,8 +40,21 @@ You can install and run AlertHub with some simple steps:
 
 ## Docker Container
 
-You can also run AlertHub through a Docker container. See [antilax-3/docker-alerthub](https://github.com/antilax-3/docker-alerthub).
+To build
 
+```
+docker build -t alerthub:2 .
+```
+
+To run
+
+```
+docker run --rm --name alerthub -d -p 3444:3444 alerthub:2
+
+# With attaching config file
+
+docker run --rm --name alerthub -d -v $(pwd)/etc:/usr/src/app/etc -p 3444:3444 Ardakilic/alerthub:2
+```
 
 ## Changelog
 
