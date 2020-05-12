@@ -1,4 +1,5 @@
 const URL = require('url');
+const querystring = require('querystring');
 // Because there are also feeds,
 // we need this method to check whether the feed is from GitHub or not
 function isFeedFromGitHub(item) {
@@ -42,9 +43,33 @@ function parseFeedData(feedData) {
   return parsedFeed;
 }
 
+// Generates the RSS feed URL with given parameters honoring the configuration
+function generateURLForTheFeed(options, config) {
+  if (options.resource === 'github') {
+    const optionalGitHubAccessToken = config.githubToken !== null ? `?token=${config.githubToken}` : '';
+    if (options.type === 'issues') {
+      return `https://issue-tracker-rss.now.sh/${options.repository}?${querystring.encode(options.params)}`;
+    }
+    if (Object.prototype.hasOwnProperty.call(options, 'subType')) {
+      return `https://www.github.com/${options.repository}/${options.type}/${options.subType}.atom${optionalGitHubAccessToken}`;
+    }
+    return `https://www.github.com/${options.repository}/${options.type}.atom${optionalGitHubAccessToken}`;
+  }
+
+  if (options.resource === 'gitlab') {
+    if (Object.prototype.hasOwnProperty.call(options, 'subType')) {
+      return `https://gitlab.com/${options.repository}/-/${options.type}/${options.subType}?format=atom`;
+    }
+    return `https://gitlab.com/${options.repository}/-/${options.type}?format=atom`;
+  }
+
+  return '';
+}
+
 module.exports = {
   parseFeedData,
-  // These bottom two are for rss braider plugin to prepend release name to feed title
+  generateURLForTheFeed,
+  // These bottom  methods are for rss braider plugin to prepend release name to feed title
   isFeedFromGitHub,
   isFeedFromGitLab,
   getReleaseNameFromGitHubAndGitLabFeedLink,

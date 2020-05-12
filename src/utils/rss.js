@@ -1,5 +1,6 @@
 const rssBraider = require('rss-braider');
 const path = require('path');
+const alertHubUtils = require('./alertHub');
 
 // Creates a RSS feed from the configuration provided
 function createRSSFeed(config) {
@@ -24,29 +25,45 @@ function createRSSFeed(config) {
     // GitHub feeds
     Object.keys(config.repositories.github).forEach((type) => {
       if (type === 'commits') {
-        Object.keys(config.repositories.github[type]).forEach((feed) => {
-          config.repositories.github[type][feed].forEach((subType) => {
+        Object.keys(config.repositories.github[type]).forEach((repository) => {
+          config.repositories.github[type][repository].forEach((subType) => {
             if (subType === '*') {
               AlertHubFeeds.alertHub.sources.push({
-                name: `github-${type}-${feed}-all`,
+                name: `github-${type}-${repository}-all`,
                 count: config.rss.includeFromEachRepository,
-                feed_url: `https://github.com/${feed}/${type}.atom`,
+                feed_url: alertHubUtils.generateURLForTheFeed({
+                  resource: 'github', repository, type,
+                }, config),
               });
             } else {
               AlertHubFeeds.alertHub.sources.push({
-                name: `github-${type}-${feed}-${subType}`,
+                name: `github-${type}-${repository}-${subType}`,
                 count: config.rss.includeFromEachRepository,
-                feed_url: `https://github.com/${feed}/${type}/${subType}.atom`,
+                feed_url: alertHubUtils.generateURLForTheFeed({
+                  resource: 'github', repository, type, subType,
+                }, config),
               });
             }
           });
         });
-      } else {
-        config.repositories.github[type].forEach((feed) => {
+      } else if (type === 'issues') {
+        Object.keys(config.repositories.github[type]).forEach((repository) => {
           AlertHubFeeds.alertHub.sources.push({
-            name: `github-${type}-${feed}`,
+            name: `github-${type}-${repository}`,
             count: config.rss.includeFromEachRepository,
-            feed_url: `https://github.com/${feed}/${type}.atom`,
+            feed_url: alertHubUtils.generateURLForTheFeed({
+              resource: 'github', repository, type, params: config.repositories.github[type][repository],
+            }, config),
+          });
+        });
+      } else {
+        config.repositories.github[type].forEach((repository) => {
+          AlertHubFeeds.alertHub.sources.push({
+            name: `github-${type}-${repository}`,
+            count: config.rss.includeFromEachRepository,
+            feed_url: alertHubUtils.generateURLForTheFeed({
+              resource: 'github', repository, type,
+            }, config),
           });
         });
       }
@@ -55,21 +72,25 @@ function createRSSFeed(config) {
     // GitLab feeds
     Object.keys(config.repositories.gitlab).forEach((type) => {
       if (type === 'commits') {
-        Object.keys(config.repositories.gitlab[type]).forEach((feed) => {
-          config.repositories.gitlab[type][feed].forEach((subType) => {
+        Object.keys(config.repositories.gitlab[type]).forEach((repository) => {
+          config.repositories.gitlab[type][repository].forEach((subType) => {
             AlertHubFeeds.alertHub.sources.push({
-              name: `gitlab-${type}-${feed}-${subType}`,
+              name: `gitlab-${type}-${repository}-${subType}`,
               count: config.rss.includeFromEachRepository,
-              feed_url: `https://gitlab.com/${feed}/-/${type}/${subType}?format=atom`,
+              feed_url: alertHubUtils.generateURLForTheFeed({
+                resource: 'gitlab', repository, type, subType,
+              }, config),
             });
           });
         });
       } else {
-        config.repositories.gitlab[type].forEach((feed) => {
+        config.repositories.gitlab[type].forEach((repository) => {
           AlertHubFeeds.alertHub.sources.push({
-            name: `gitlab-${type}-${feed}`, // this is actually the user/repo string
+            name: `gitlab-${type}-${repository}`, // this is actually the user/repo string
             count: config.rss.includeFromEachRepository,
-            feed_url: `https://gitlab.com/${feed}/-/${type}?format=atom`,
+            feed_url: alertHubUtils.generateURLForTheFeed({
+              resource: 'gitlab', repository, type,
+            }, config),
           });
         });
       }

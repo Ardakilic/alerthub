@@ -15,30 +15,45 @@ const rssUtils = require('./utils/rss');
 const feeder = new RssFeedEmitter({ userAgent: config.userAgent || 'Mozilla/5.0 (Linux x86_64; rv:76.0) Gecko/20100101 Firefox/76.0' });
 
 const bootDate = new Date();
-console.log(`Application booted at ${bootDate}`);
+console.log(`Application booted at ${bootDate.toUTCString()}`);
 
 // GitHub feeds
 Object.keys(config.repositories.github).forEach((type) => {
   if (type === 'commits') {
-    Object.keys(config.repositories.github[type]).forEach((feed) => {
-      config.repositories.github[type][feed].forEach((subType) => {
+    Object.keys(config.repositories.github[type]).forEach((repository) => {
+      config.repositories.github[type][repository].forEach((subType) => {
         if (subType === '*') {
           feeder.add({
-            url: `https://github.com/${feed}/${type}.atom`,
+            url: alertHubUtils.generateURLForTheFeed({
+              resource: 'github', repository, type,
+            },
+            config),
             refresh: config.interval,
           });
         } else {
           feeder.add({
-            url: `https://github.com/${feed}/${type}/${subType}.atom`,
+            url: alertHubUtils.generateURLForTheFeed({
+              resource: 'github', repository, type, subType,
+            },
+            config),
             refresh: config.interval,
           });
         }
       });
     });
-  } else {
-    config.repositories.github[type].forEach((feed) => {
+  } else if (type === 'issues') {
+    Object.keys(config.repositories.github[type]).forEach((repository) => {
       feeder.add({
-        url: `https://github.com/${feed}/${type}.atom`,
+        url: alertHubUtils.generateURLForTheFeed({
+          resource: 'github', repository, type, params: config.repositories.github[type][repository],
+        }, config),
+        refresh: config.interval,
+      });
+    });
+  } else {
+    config.repositories.github[type].forEach((repository) => {
+      feeder.add({
+        url: alertHubUtils.generateURLForTheFeed({ resource: 'github', repository, type }, config),
         refresh: config.interval,
       });
     });
@@ -48,18 +63,20 @@ Object.keys(config.repositories.github).forEach((type) => {
 // GitLab feeds
 Object.keys(config.repositories.gitlab).forEach((type) => {
   if (type === 'commits') {
-    Object.keys(config.repositories.gitlab[type]).forEach((feed) => {
-      config.repositories.gitlab[type][feed].forEach((subType) => {
+    Object.keys(config.repositories.gitlab[type]).forEach((repository) => {
+      config.repositories.gitlab[type][repository].forEach((subType) => {
         feeder.add({
-          url: `https://gitlab.com/${feed}/-/${type}/${subType}?format=atom`,
+          url: alertHubUtils.generateURLForTheFeed({
+            resource: 'gitlab', repository, type, subType,
+          }, config),
           refresh: config.interval,
         });
       });
     });
   } else {
-    config.repositories.gitlab[type].forEach((feed) => {
+    config.repositories.gitlab[type].forEach((repository) => {
       feeder.add({
-        url: `https://gitlab.com/${feed}/-/${type}?format=atom`,
+        url: alertHubUtils.generateURLForTheFeed({ resource: 'gitlab', repository, type }, config),
         refresh: config.interval,
       });
     });

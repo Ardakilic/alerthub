@@ -1,6 +1,11 @@
 module.exports = {
   interval: 60000, // Feed check interval, in miliseconds
   userAgent: 'Mozilla/5.0 (Linux x86_64; rv:76.0) Gecko/20100101 Firefox/76.0', // Experimental: User agent string to bypass possible fetching limits on GitHub
+  /**
+   * Provide your GitHub token below to bypass the rate limit
+   * and to get notified from private repositories
+   */
+  githubToken: null,
   notifications: {
     pushbullet: {
       enabled: false,
@@ -57,6 +62,12 @@ module.exports = {
         'laravel/laravel': ['*'], // All commits of https://github.com/Laravel/laravel regardless of the branch
         'acikkaynak/acikkaynak': ['master'], // only commits at master branch of https://github.com/acikkaynak/acikkaynak
         'acikkaynak/acikkaynak-website': ['master', 'development'], // master and development branches of https://github.com/acikkaynak/acikkaynak-website
+      },
+      issues: {
+        'denoland/deno': { // The below will be converted to GitHub API querystring parameters, feel free to edit accordingly
+          state: 'all', // all, open, closed
+          labels: '', // leave blank for all labels, or add comma for multiple labels
+        },
       },
     },
     gitlab: {

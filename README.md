@@ -19,6 +19,19 @@ This simple cli tool watches the releases set in config, and notifies you with E
 
 **Update 2018.11.28:** GitHub now supports following the repositories' releases, however, it's still buggy for me, and they still don't cover the push notification feature which this tool offers.
 
+## Features
+
+Some people still wonder why this tool, which was released before GitHub release feature announced, yet exists, so I wanted to list the features as a bullet list:
+
+* You can watch GitHub releases, AND tags and commits and issues
+* You can also watch private GitHub repositories by providing an access token
+* You can watch GitLab tags and commits
+* You can watch 3rd party releases which are neither from GitHub nor GitLab
+* You can get notified with e-mail when a new update to your watch list is published
+* You can also get notified with push notification, using services PushBullet and / or PushOver
+* You can generate an aggreagated RSS feed with this tool for all your watches, which is sorted by date, and use this aggregated feed to source to your favorite news reader application, or to pipe to services such as IFTTT etc.
+* Self-hosted. Also, no GUI. You can simply set it and forget it
+
 ## Requirements
 
 * NodeJS 10.x or newer

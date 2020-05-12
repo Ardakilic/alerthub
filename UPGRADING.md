@@ -1,5 +1,11 @@
 # Upgrading Guide
 
+## 2.0.0 to 2.1.0
+- Stop the aplication
+- Copy the `githubToken` key from example to your current config
+- Copy the `repositories.github.issues` section from example to your current config
+- Re-start the application.
+
 ## 1.3.0 to 2.0.0
 - Stop the application
 - Backup your configuration file to somewhere outside the application
