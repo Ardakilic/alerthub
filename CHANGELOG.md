@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [2.1.0] - 2020-05-10
 ### Added
-- You can now track GitHub issues, thanks to [kadir96/issue-tracker-rss](https//github.com/kadir96/issue-tracker-rss) 🎉
+- You can now track GitHub issues, thanks to [kadir96/issue-tracker-rss](https://github.com/kadir96/issue-tracker-rss) 🎉
 - You can now track private GitHub repositories' feeds by providing a personal access token 🎉
 
 ## [2.0.0] - 2020-05-10
