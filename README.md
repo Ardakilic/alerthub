@@ -38,8 +38,9 @@ Some people still wonder why this tool, which was released before GitHub release
 * (Optional) PushBullet Api Key
 * (Optional) PushOver Api Key
 * (Optional) SMTP credentials to dispatch e-mail
+* (Optional) Personal GitHub Access token to access to private repositories and to increase fetching rate limits
 
-Either one of the PushBullet, PushOver or the SMTP credentials are required to get notifications. RSS feed doesn't require none.
+Either one of the PushBullet, PushOver or the SMTP credentials are required to get notifications. RSS feed doesn't require neither.
 
 ## Installation
 
