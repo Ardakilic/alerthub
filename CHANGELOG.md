@@ -4,7 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [2.1.0] - 2020-05-10
+## [2.1.1] - 2020-05-17
+### Fixed
+- A typo was fixed on the check to prepend the release name for the notifications
+
+## [2.1.0] - 2020-05-14
 ### Added
 - You can now track GitHub issues, thanks to [kadir96/issue-tracker-rss](https://github.com/kadir96/issue-tracker-rss) 🎉
 - You can now track private GitHub repositories' feeds by providing a personal access token 🎉

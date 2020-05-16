@@ -36,7 +36,7 @@ function parseFeedData(feedData) {
   };
 
   // We need to prepend release name to the title
-  if (isFeedFromGitHub(feedData) === true || isFeedFromGitLab(true)) {
+  if (isFeedFromGitHub(feedData) === true || isFeedFromGitLab(feedData) === true) {
     parsedFeed.title = `${getReleaseNameFromGitHubAndGitLabFeedLink(feedData.link)} - ${feedData.title}`;
   }
 
