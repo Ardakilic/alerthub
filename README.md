@@ -63,7 +63,7 @@ docker build -t alerthub:2 .
 To run
 
 ```
-docker run --name alerthub -d -p 3444:3444 ghcr.io/ardakilic/alerthub:2
+docker run --name alerthub -d -v /host/path/config.js:/usr/src/app/etc/config.js -p 3444:3444 ghcr.io/ardakilic/alerthub:2
 ```
 
 ## Changelog
