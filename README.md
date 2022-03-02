@@ -63,11 +63,7 @@ docker build -t alerthub:2 .
 To run
 
 ```
-docker run --rm --name alerthub -d -p 3444:3444 alerthub:2
-
-# With attaching config file
-
-docker run --rm --name alerthub -d -v $(pwd)/etc:/usr/src/app/etc -p 3444:3444 Ardakilic/alerthub:2
+docker run --name alerthub -d -p 3444:3444 ghcr.io/ardakilic/alerthub:2
 ```
 
 ## Changelog
