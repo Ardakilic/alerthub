@@ -54,12 +54,6 @@ You can install and run AlertHub with some simple steps:
 
 ## Docker Container
 
-To build
-
-```
-docker build -t alerthub:2 .
-```
-
 To run
 
 ```
