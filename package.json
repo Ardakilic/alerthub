@@ -15,17 +15,17 @@
     "url": "https://github.com/Ardakilic/alerthub.git"
   },
   "dependencies": {
-    "nodemailer": "^6.6.1",
-    "@jef/pushbullet": "^2.4.3",
+    "nodemailer": "^6.7.8",
+    "pushbullet": "^3.0.0",
     "rss-braider": "^1.2.4",
-    "rss-feed-emitter": "^3.2.2",
-    "striptags": "^3.1.1",
+    "rss-feed-emitter": "^3.2.3",
+    "striptags": "^3.2.0",
     "pushover-notifications": "^1.2.2"
   },
   "devDependencies": {
-    "eslint": "^8.0.0",
+    "eslint": "^8.22.0",
     "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.22.1"
+    "eslint-plugin-import": "^2.26.0"
   },
   "engines": {
     "node": ">=10.0.0"

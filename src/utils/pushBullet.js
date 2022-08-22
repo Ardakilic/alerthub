@@ -1,4 +1,4 @@
-const PushBullet = require('@jef/pushbullet');
+const PushBullet = require('pushbullet');
 
 // Strip tags is to remove HTML before sending to Pushbullet.
 const striptags = require('striptags');
