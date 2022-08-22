@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [2.1.4] - 2021-01-07
+### Fixed
+- [#51](https://github.com/Ardakilic/alerthub/issues/51) should be fixed.
+- Dependencies updated and possible security vulnerability removed.
+
+## [2.1.3] - 2021-02-01
+### Fixed
+- This Version fixes [#21](https://github.com/Ardakilic/alerthub/issues/21), thanks @nightah !
+
+## [2.1.2] - 2021-01-07
+### Fixed
+- Dependencies updated and possible security vulnerability removed.
+
 ## [2.1.1] - 2020-05-17
 ### Fixed
 - A typo was fixed on the check to prepend the release name for the notifications

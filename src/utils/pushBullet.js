@@ -9,7 +9,8 @@ async function sendPushBulletNotification(config, feedData) {
   const pusher = new PushBullet(config.notifications.pushbullet.accessToken);
   await pusher.link(
     {},
-    feedData.title, feedData.link,
+    feedData.title,
+    feedData.link,
     striptags(feedData.description),
     (error, response) => {
       if (error) {

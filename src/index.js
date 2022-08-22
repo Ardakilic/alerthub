@@ -24,18 +24,22 @@ Object.keys(config.repositories.github).forEach((type) => {
       config.repositories.github[type][repository].forEach((subType) => {
         if (subType === '*') {
           feeder.add({
-            url: alertHubUtils.generateURLForTheFeed({
-              resource: 'github', repository, type,
-            },
-            config),
+            url: alertHubUtils.generateURLForTheFeed(
+              {
+                resource: 'github', repository, type,
+              },
+              config
+            ),
             refresh: config.interval,
           });
         } else {
           feeder.add({
-            url: alertHubUtils.generateURLForTheFeed({
-              resource: 'github', repository, type, subType,
-            },
-            config),
+            url: alertHubUtils.generateURLForTheFeed(
+              {
+                resource: 'github', repository, type, subType,
+              },
+              config
+            ),
             refresh: config.interval,
           });
         }
@@ -126,6 +130,10 @@ feeder.on('new-item', async (item) => {
   }
 });
 // Notification part END
+
+// Handling errors on feed emitter
+feeder.on('error', console.error);
+// Error handling, currently done to console
 
 // Let's handle the aggregated RSS part
 if (config.rss.enabled === true) {
