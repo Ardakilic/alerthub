@@ -1,9 +1,9 @@
-const PushOver = require('pushover-notifications');
-const striptags = require('striptags');
+import PushOver from 'pushover-notifications';
+import striptags from 'striptags';
 
 // Send the push notification.
 // Todo: why bother with async / await at all ?
-async function sendPushOverNotification(config, feedData) {
+export default async function sendPushOverNotification(config, feedData) {
   return new Promise((resolve, reject) => {
     const pusher = new PushOver({
       user: config.notifications.pushover.config.user,
@@ -24,7 +24,3 @@ async function sendPushOverNotification(config, feedData) {
     });
   });
 }
-
-module.exports = {
-  sendPushOverNotification,
-};

@@ -1,9 +1,9 @@
-const rssBraider = require('rss-braider');
-const path = require('path');
-const alertHubUtils = require('./alertHub');
+import rssBraider from 'rss-braider';
+import path from 'path';
+import * as alertHubUtils from './alertHub.js';
 
 // Creates a RSS feed from the configuration provided
-function createRSSFeed(config) {
+export default function createRSSFeed(config) {
   if (config.rss.enabled === true) {
     const AlertHubFeeds = {
       alertHub: {
@@ -138,6 +138,3 @@ function createRSSFeed(config) {
   return Promise.resolve('');
 }
 
-module.exports = {
-  createRSSFeed,
-};

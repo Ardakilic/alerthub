@@ -1,8 +1,8 @@
-const mail = require('nodemailer');
-const striptags = require('striptags');
+import mail from 'nodemailer';
+import striptags from 'striptags';
 
 // Sends and e-mail notification to provided user
-async function sendEmailNotification(config, feedData) {
+export default async function sendEmailNotification(config, feedData) {
   const transporter = mail.createTransport(config.notifications.email.config);
 
   /* await smtp.verify((error, success) => {
@@ -31,7 +31,3 @@ async function sendEmailNotification(config, feedData) {
     return info;
   });
 }
-
-module.exports = {
-  sendEmailNotification,
-};

@@ -1,11 +1,11 @@
-const PushBullet = require('pushbullet');
+import PushBullet from 'pushbullet';
 
 // Strip tags is to remove HTML before sending to Pushbullet.
-const striptags = require('striptags');
+import striptags from 'striptags';
 
 // Send the push notification.
 // Todo: why bother with async / await at all ?
-async function sendPushBulletNotification(config, feedData) {
+export default async function sendPushBulletNotification(config, feedData) {
   const pusher = new PushBullet(config.notifications.pushbullet.accessToken);
   await pusher.link(
     {},
@@ -21,7 +21,3 @@ async function sendPushBulletNotification(config, feedData) {
     }
   );
 }
-
-module.exports = {
-  sendPushBulletNotification,
-};

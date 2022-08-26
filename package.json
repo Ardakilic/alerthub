@@ -3,6 +3,7 @@
   "version": "2.1.1",
   "description": "A tool to send notifications when an update to a repository is released",
   "main": "./src/index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "init": "cp ./etc/config.example.js ./etc/config.js",
