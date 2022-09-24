@@ -1,5 +1,6 @@
-const URL = require('url');
-const querystring = require('querystring');
+import URL from 'url';
+import querystring from 'querystring';
+
 // Because there are also feeds,
 // we need this method to check whether the feed is from GitHub or not
 function isFeedFromGitHub(item) {
@@ -66,7 +67,7 @@ function generateURLForTheFeed(options, config) {
   return '';
 }
 
-module.exports = {
+export {
   parseFeedData,
   generateURLForTheFeed,
   // These bottom  methods are for rss braider plugin to prepend release name to feed title

@@ -1,15 +1,16 @@
 /* eslint no-console: ["error", { allow: ["warn", "error", "log"] }] */
 
 // First, let's require the libraries
-const RssFeedEmitter = require('rss-feed-emitter');
-const http = require('http');
+import RssFeedEmitter from 'rss-feed-emitter'
+import http from 'http'
 
-const config = require('../etc/config');
-const alertHubUtils = require('./utils/alertHub');
-const pushBulletUtils = require('./utils/pushBullet');
-const pushOverUtils = require('./utils/pushOver');
-const emailUtils = require('./utils/email');
-const rssUtils = require('./utils/rss');
+import * as alertHubUtils from './utils/alertHub.js';
+import pushBulletUtils from './utils/pushBullet.js';
+import pushOverUtils from './utils/pushOver.js';
+import emailUtils from './utils/email.js';
+import rssUtils from './utils/rss.js';
+
+import { config } from '../etc/config.js';
 
 // RSS Feed emitter to watch and parse feed
 const feeder = new RssFeedEmitter({ userAgent: config.userAgent || 'Mozilla/5.0 (Linux x86_64; rv:76.0) Gecko/20100101 Firefox/76.0' });
