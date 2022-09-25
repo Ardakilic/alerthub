@@ -18,6 +18,7 @@
         "exports": "always-multiline",
         "functions": "ignore"
       }
-    ]
+    ],
+    "import/extensions": "off"
   }
 }

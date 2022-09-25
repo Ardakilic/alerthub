@@ -84,4 +84,4 @@ const config = {
     // direct rss links from other sources if you want to watch with this tool
   ],
 };
-export { config }
+export { config };
