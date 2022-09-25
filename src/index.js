@@ -1,10 +1,10 @@
 /* eslint no-console: ["error", { allow: ["warn", "error", "log"] }] */
 
 // First, let's require the libraries
-import RssFeedEmitter from 'rss-feed-emitter'
-import http from 'http'
+import RssFeedEmitter from 'rss-feed-emitter';
+import http from 'http';
 
-import * as alertHubUtils from './utils/alertHub.js';
+import alertHubUtils from './utils/alertHub.js';
 import pushBulletUtils from './utils/pushBullet.js';
 import pushOverUtils from './utils/pushOver.js';
 import emailUtils from './utils/email.js';

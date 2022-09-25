@@ -1,4 +1,4 @@
-let config = {
+const config = {
   interval: 60000, // Feed check interval, in miliseconds
   userAgent: 'Mozilla/5.0 (Linux x86_64; rv:76.0) Gecko/20100101 Firefox/76.0', // Experimental: User agent string to bypass possible fetching limits on GitHub
   /**

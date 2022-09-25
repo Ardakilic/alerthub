@@ -3,7 +3,7 @@
  }]
 */
 // We need a plug-in to add release name to the title.
-import * as utils from '../../utils/alertHub.js'
+import utils from '../../utils/alertHub.js';
 
 export default (_item, itemOptions, /* source */) => {
   if (
