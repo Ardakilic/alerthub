@@ -5,12 +5,12 @@ import RssFeedEmitter from 'rss-feed-emitter';
 import http from 'http';
 
 import alertHubUtils from './utils/alertHub.js';
-import pushBulletUtils from './utils/pushBullet.js';
-import pushOverUtils from './utils/pushOver.js';
-import emailUtils from './utils/email.js';
-import rssUtils from './utils/rss.js';
+import pushBulletUtils from './utils/pushBullet.mjs';
+import pushOverUtils from './utils/pushOver.mjs';
+import emailUtils from './utils/email.mjs';
+import RssUtils from './utils/rss.mjs';
 
-import { config } from '../etc/config.js';
+import config from '../etc/config.js';
 
 // RSS Feed emitter to watch and parse feed
 const feeder = new RssFeedEmitter({ userAgent: config.userAgent || 'Mozilla/5.0 (Linux x86_64; rv:76.0) Gecko/20100101 Firefox/76.0' });
@@ -138,10 +138,11 @@ feeder.on('error', console.error);
 
 // Let's handle the aggregated RSS part
 if (config.rss.enabled === true) {
+  const rssUtils = new RssUtils(config);
   http.createServer((_req, res) => {
     res.writeHead(200, { 'Content-Type': 'application/xml' });
     // Upon each request, let's fetch the RSS feed string from util
-    rssUtils.createRSSFeed(config).then((rssFeed) => {
+    rssUtils.createRSSFeed().then((rssFeed) => {
       res.end(rssFeed);
     });
   }).listen(config.rss.port);

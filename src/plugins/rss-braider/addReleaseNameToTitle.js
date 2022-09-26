@@ -3,9 +3,9 @@
  }]
 */
 // We need a plug-in to add release name to the title.
-import utils from '../../utils/alertHub.js';
+const utils = require('../../utils/alertHub.js');
 
-export default (_item, itemOptions, /* source */) => {
+module.exports = (_item, itemOptions, /* source */) => {
   if (
     utils.isFeedFromGitHub(itemOptions) === true
     || utils.isFeedFromGitLab(itemOptions) === true

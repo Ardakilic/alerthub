@@ -1,12 +1,15 @@
 import rssBraider from 'rss-braider';
 import path from 'path';
+import * as url from 'url';
+
 import alertHubUtils from './alertHub.js';
 
+const __dirname = path.normalize(url.fileURLToPath(new URL('.', import.meta.url)));
+
 export default class RssUtils {
-  // Creates a RSS feed from the configuration provided
-  static createRSSFeed(config) {
-    if (config.rss.enabled === true) {
-      const AlertHubFeeds = {
+  // Initializes the RSS braider client
+  constructor(config) {
+    const AlertHubFeeds = {
         alertHub: {
           feed_name: 'AlertHub',
           default_count: 1,
@@ -114,29 +117,27 @@ export default class RssUtils {
         plugins_directories: [path.join(__dirname, '..', 'plugins', 'rss-braider')],
       };
 
-      const rssClient = rssBraider.createClient(braiderOptions);
+      this.rssClient = rssBraider.createClient(braiderOptions);
 
       // Override logging level (debug, info, warn, err, off)
-      rssClient.logger.level(config.rss.logLevel || 'info');
+      this.rssClient.logger.level(config.rss.logLevel || 'info');
+  }
 
-      // Let's make a promise
-      const process = new Promise((resolve, reject) => {
-        rssClient.processFeed('alertHub', 'rss', (err, data) => {
-          if (err) {
-            // console.log(err);
-            reject(err);
+  // Creates a RSS feed from the configuration provided
+  createRSSFeed() {
+    // Let's make a promise
+    const process = new Promise((resolve, reject) => {
+      this.rssClient.processFeed('alertHub', 'rss', (err, data) => {
+        if (err) {
+          // console.log(err);
+          reject(err);
 
-            return;
-          }
-          // console.log(data);
-          resolve(data);
-        });
+          return;
+        }
+        // console.log(data);
+        resolve(data);
       });
-
-      return process;
-    }
-
-    // If RSS output is disabled, empty string will be returned
-    return Promise.resolve('');
+    });
+    return process;
   }
 }

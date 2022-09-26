@@ -1,7 +1,7 @@
-import URL from 'url';
-import querystring from 'querystring';
+const URL = require('url');
+const querystring = require('querystring');
 
-export default class AlertHubUtils {
+class AlertHubUtils {
   // Because there are also feeds,
   // we need this method to check whether the feed is from GitHub or not
   static isFeedFromGitHub(item) {
@@ -68,3 +68,5 @@ export default class AlertHubUtils {
     return '';
   }
 }
+
+module.exports = AlertHubUtils;

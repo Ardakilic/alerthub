@@ -2,7 +2,7 @@
   "props": true, "ignorePropertyModificationsFor": ["itemOptions"]
  }]
 */
-export default (item, itemOptions /* , source */) => {
+module.exports = (item, itemOptions, /* source */) => {
   if (
     itemOptions.date === null
     && item.meta !== undefined

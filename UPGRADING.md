@@ -4,7 +4,6 @@
 - Stop the aplication
 - Get the updates by pulling changes
 - Run `npm install` to install new dependencies.
-- Change the config format from module.exports to `const config = {` at the top and `export { config };`. (See [config.example.js](etc/config.example.js))
 - Re-start the application.
 
 ## 2.0.0 to 2.1.0

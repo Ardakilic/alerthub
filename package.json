@@ -1,13 +1,13 @@
 {
   "name": "alerthub",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "A tool to send notifications when an update to a repository is released",
-  "main": "./src/index.js",
-  "type": "module",
+  "main": "./src/index.mjs",
+  "type": "commonjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "init": "cp ./etc/config.example.js ./etc/config.js",
-    "start": "node ./src/index.js"
+    "start": "node ./src/index.mjs"
   },
   "author": "Arda Kilicdagi",
   "license": "MIT",
