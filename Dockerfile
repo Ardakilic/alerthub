@@ -22,4 +22,4 @@ COPY ./package.json ./package.json
 
 COPY ./etc ./etc
 
-CMD node src/index.mjs
+CMD ["node", "src/index.mjs"]
