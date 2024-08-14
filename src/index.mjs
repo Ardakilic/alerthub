@@ -9,7 +9,6 @@ import pushBulletUtils from './utils/pushBullet.mjs';
 import pushOverUtils from './utils/pushOver.mjs';
 import emailUtils from './utils/email.mjs';
 import RssUtils from './utils/rss.mjs';
-import telegramUtils from './utils/telegram.mjs';
 import ntfyUtils from './utils/ntfy.mjs';
 
 import config from '../etc/config.js';
@@ -125,9 +124,9 @@ feeder.on('new-item', async (item) => {
     if (config.notifications.pushover.enabled === true) {
       await pushOverUtils.sendPushOverNotification(config, feedData);
     }
-    if (config.notifications.telegram.enabled === true) {
-      await telegramUtils.sendTelegramNotification(config, feedData);
-    }
+    // if (config.notifications.telegram.enabled === true) {
+    //   await telegramUtils.sendTelegramNotification(config, feedData);
+    // }
     if (config.notifications.ntfy.enabled === true) {
       await ntfyUtils.sendNtfyNotification(config, feedData);
     }

@@ -23,7 +23,6 @@
     "rss-feed-emitter": "^3.2.3",
     "striptags": "^3.2.0",
     "pushover-notifications": "^1.2.2",
-    "node-telegram-bot-api": "^0.66.0",
     "ntfy": "^1.6.0"
   },
   "devDependencies": {
