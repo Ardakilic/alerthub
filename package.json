@@ -1,9 +1,10 @@
 {
   "name": "alerthub",
-  "version": "2.2.2",
+  "version": "2.2.3",
   "description": "A tool to send notifications when an update to a repository is released",
   "main": "./src/index.mjs",
   "type": "commonjs",
+  "type1": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "init": "cp ./etc/config.example.js ./etc/config.js",
@@ -13,7 +14,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Ardakilic/alerthub.git"
+    "url": "https://github.com/dantesbr/alerthub.git"
   },
   "dependencies": {
     "nodemailer": "^6.7.8",
@@ -21,14 +22,17 @@
     "rss-braider": "^1.2.4",
     "rss-feed-emitter": "^3.2.3",
     "striptags": "^3.2.0",
-    "pushover-notifications": "^1.2.2"
+    "pushover-notifications": "^1.2.2",
+    "node-telegram-bot-api": "^0.66.0",
+    "ntfy": "^1.6.0"
   },
   "devDependencies": {
+	"@types/node": "^20.0.0",
     "eslint": "^8.22.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.26.0"
   },
   "engines": {
-    "node": ">=10.0.0"
+    "node": ">=18.0.0"
   }
 }

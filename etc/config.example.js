@@ -25,8 +25,15 @@ module.exports = {
         chatid: 'TELEGRAM_CHAT_ID',
       },
     },
+    ntfy: {
+      enabled: false,
+      config: {
+        topic: 'NTFY_TOPIC',
+        priority: 'DEFAULT',
+      },
+    },
     email: {
-      enabled: true,
+      enabled: false,
       config: { // Nodemailer configuration
         host: 'smtp.service.com',
         port: 465,

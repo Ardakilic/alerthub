@@ -1,0 +1,12 @@
+services:
+  # docker compose down && docker image prune -a -f && docker compose up -d && docker compose logs -f 
+  # docker compose down && docker compose up -d && docker compose logs -f 
+  alerthub:
+    build: .
+    #image: ghcr.io/ardakilic/alerthub:latest
+    container_name: alerthub
+    ports:
+      - 3444:3444
+    volumes:
+      - ./.test/config.js:/usr/src/app/etc/config.js
+    restart: unless-stopped
