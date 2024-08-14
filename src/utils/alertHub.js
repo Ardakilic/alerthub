@@ -14,9 +14,11 @@ class AlertHubUtils {
   }
 
   static isFeedFromGitLab(item) {
-    const parsedURL = URL.parse(item.url);
-    if (parsedURL.hostname === 'gitlab.com') {
-      return true;
+    if (item.url !== undefined && item.url !== null && typeof item.url === 'string') {
+      const parsedURL = URL.parse(item.url);
+      if (parsedURL.hostname === 'gitlab.com') {
+        return true;
+      }
     }
     return false;
   }
