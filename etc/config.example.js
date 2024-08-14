@@ -18,6 +18,13 @@ module.exports = {
         token: 'PUSHOVER_TOKEN',
       },
     },
+    telegram: {
+      enabled: false,
+      config: {
+        token: 'TELEGRAM_BOT_TOKEN',
+        chatid: 'TELEGRAM_CHAT_ID',
+      },
+    },
     email: {
       enabled: true,
       config: { // Nodemailer configuration
