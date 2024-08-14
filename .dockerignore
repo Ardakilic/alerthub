@@ -3,6 +3,7 @@ etc/config.js
 
 # Dependency directories
 node_modules/
+.test/
 
 package-lock.json
 *.md

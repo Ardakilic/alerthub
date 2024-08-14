@@ -1,5 +1,5 @@
 # Install npm packages
-FROM node:20-alpine as builder
+FROM node:20-alpine AS builder
 
 WORKDIR /usr/src/app
 
@@ -12,7 +12,7 @@ FROM node:20-alpine
 
 WORKDIR /usr/src/app
 
-LABEL maintainer="Kaan Karakaya <ykk@theykk.net>"
+LABEL maintainer="DantesBr <dantesbr@outlook.com>"
 
 COPY --from=builder /usr/src/app/ /usr/src/app/
 
