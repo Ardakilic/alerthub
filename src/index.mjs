@@ -114,7 +114,8 @@ feeder.on('new-item', async (item) => {
   // Let's compare the dates and make sure the feed is a new feed.
   if (date.getTime() > bootDate.getTime()) {
     console.log(`New release found! ${item.title}!`);
-
+    //console.log(item);
+	
     const feedData = alertHubUtils.parseFeedData(item);
 
     // First, try to send the push notifications
