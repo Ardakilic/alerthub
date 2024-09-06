@@ -56,7 +56,7 @@ You can install and run AlertHub with some simple steps:
 
 First, you need to get the example config file and modify it accordingly, either get a copy from [this repo](./etc/config.example.js), or with the following command:
 ```
-docker run --rm ghcr.io/ardakilic/alerthub:2 cat /usr/src/app/etc/config.js > /host/path/config.js
+docker run --rm ghcr.io/ardakilic/alerthub:2 cat /usr/src/app/etc/config.example.js > /host/path/config.js
 ```
 
 To run
