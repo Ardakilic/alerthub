@@ -1,13 +1,14 @@
-# App-spesific
+# App-specific
 etc/config.js
 
-# Dependency directories
-node_modules/
-
-package-lock.json
-*.md
+# Repo-specific
+.git
 .gitignore
 .editorconfig
-.dockerignore
+biome.json
+*.md
 Dockerfile
+LICENSE
 renovate.json
+node_modules
+npm-debug.log

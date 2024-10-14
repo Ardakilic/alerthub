@@ -1,24 +1,19 @@
 # Install npm packages
-FROM node:20 as builder
+FROM node:20 AS builder
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
 COPY package.json .
 
 RUN yarn install --prod
 
-# Push js files
-FROM node:20-slim
+# Create the final image
+# FROM node:20-slim AS runner
+FROM gcr.io/distroless/nodejs20-debian12:latest
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
-COPY --from=builder /usr/src/app/ /usr/src/app/
-
-COPY ./src ./src
-
-COPY ./package.json ./package.json
-
-COPY ./etc/config.js ./etc/config.js
+COPY --from=builder /app /app
 
 EXPOSE 3444
 
