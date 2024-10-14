@@ -1,7 +1,3 @@
-/* eslint no-param-reassign: ["error",{
-  "props": true, "ignorePropertyModificationsFor": ["itemOptions"]
- }]
-*/
 module.exports = (item, itemOptions, /* source */) => {
   if (
     itemOptions.date === null

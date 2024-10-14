@@ -1,7 +1,3 @@
-/* eslint no-param-reassign: ["error",{
-  "props": true, "ignorePropertyModificationsFor": ["itemOptions"]
- }]
-*/
 // We need a plug-in to add release name to the title.
 const utils = require('../../utils/alertHub.js');
 

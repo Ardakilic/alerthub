@@ -5,7 +5,7 @@ module.exports = {
    * Provide your GitHub token below to bypass the rate limit
    * and to get notified from private repositories
    */
-  githubToken: null,
+  // githubToken: null,
   notifications: {
     pushbullet: {
       enabled: false,
@@ -33,6 +33,13 @@ module.exports = {
         from: '"AlertHub" <smtp@user.com>', // from field, can be pure e-mail or "Name" <e-mail> format
         to: 'your@email.com', // Your e-mail, can add more e-mails by commas
         subjectPrefix: 'New GitHub Release', // Subject prefix
+      },
+    },
+    telegram: {
+      enabled: false,
+      config: {
+        token: 'TELEGRAM_TOKEN',
+        chatId: 'CHAT_ID',
       },
     },
   },

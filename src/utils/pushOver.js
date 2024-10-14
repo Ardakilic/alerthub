@@ -1,14 +1,13 @@
 import PushOver from 'pushover-notifications';
 import striptags from 'striptags';
 
-export default class PushOverUtils {
+module.exports = {
   // Send the push notification.
-  // Todo: why bother with async / await at all ?
-  static async sendPushOverNotification(config, feedData) {
+  async sendPushOverNotification(config, feedData) {
     return new Promise((resolve, reject) => {
       const pusher = new PushOver({
-        user: config.notifications.pushover.config.user,
-        token: config.notifications.pushover.config.token,
+        user: config.config.user,
+        token: config.config.token,
       });
       const msg = {
         message: `${striptags(feedData.description)}\n\n${feedData.link}`,
@@ -24,5 +23,5 @@ export default class PushOverUtils {
         return result;
       });
     });
-  }
+  },
 }

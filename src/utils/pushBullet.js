@@ -5,10 +5,9 @@ import striptags from 'striptags';
 
 // Send the push notification.
 // Todo: why bother with async / await at all ?
-export default class PushBulletUtils {
-  static async sendPushBulletNotification(config, feedData) {
-    const pusher = new PushBullet(config.notifications.pushbullet.accessToken);
-    // @ts-ignore
+export default {
+  async sendPushBulletNotification(config, feedData) {
+    const pusher = new PushBullet(config.accessToken);
     await pusher.link(
       {},
       feedData.title,
@@ -22,5 +21,5 @@ export default class PushBulletUtils {
         return response;
       }
     );
-  }
+  },
 }

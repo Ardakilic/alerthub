@@ -1,34 +1,34 @@
-const URL = require('url');
-const querystring = require('querystring');
+import URL from 'node:url';
+import querystring from 'node:querystring';
 
-class AlertHubUtils {
+export default {
   // Because there are also feeds,
   // we need this method to check whether the feed is from GitHub or not
-  static isFeedFromGitHub(item) {
+  isFeedFromGitHub(item) {
     if (item.guid !== undefined && item.guid !== null && typeof item.guid === 'string') {
       if (item.guid.substring(0, 14) === 'tag:github.com') {
         return true;
       }
     }
     return false;
-  }
+  },
 
-  static isFeedFromGitLab(item) {
+  isFeedFromGitLab(item) {
     const parsedURL = URL.parse(item.url);
     if (parsedURL.hostname === 'gitlab.com') {
       return true;
     }
     return false;
-  }
+  },
 
   // Because there's no release name in GitHub feed, we steal from URL
-  static getReleaseNameFromGitHubAndGitLabFeedLink(link) {
+  getReleaseNameFromGitHubAndGitLabFeedLink(link) {
     const parts = link.split('/');
     return `${parts[3]}/${parts[4]}`;
-  }
+  },
 
   // Standardize the new feed element
-  static parseFeedData(feedData) {
+  parseFeedData(feedData) {
     const parsedFeed = {
       title: feedData.title,
       link: feedData.link,
@@ -43,19 +43,20 @@ class AlertHubUtils {
     }
 
     return parsedFeed;
-  }
+  },
 
   // Generates the RSS feed URL with given parameters honoring the configuration
-  static generateURLForTheFeed(options, config) {
+  generateURLForTheFeed(options /*, config*/) {
     if (options.resource === 'github') {
-      const optionalGitHubAccessToken = config.githubToken !== null ? `?token=${config.githubToken}` : '';
+      // TODO: Implement GitHub token support
+      // const optionalGitHubAccessToken = config.githubToken !== null ? `?token=${config.githubToken}` : '';
       if (options.type === 'issues') {
         return `https://issue-tracker-rss.now.sh/${options.repository}?${querystring.encode(options.params)}`;
       }
       if (Object.prototype.hasOwnProperty.call(options, 'subType')) {
-        return `https://www.github.com/${options.repository}/${options.type}/${options.subType}.atom${optionalGitHubAccessToken}`;
+        return `https://www.github.com/${options.repository}/${options.type}/${options.subType}.atom`; //${optionalGitHubAccessToken}`;
       }
-      return `https://www.github.com/${options.repository}/${options.type}.atom${optionalGitHubAccessToken}`;
+      return `https://www.github.com/${options.repository}/${options.type}.atom`; //${optionalGitHubAccessToken}`;
     }
 
     if (options.resource === 'gitlab') {
@@ -68,5 +69,3 @@ class AlertHubUtils {
     return '';
   }
 }
-
-module.exports = AlertHubUtils;

@@ -1,5 +1,5 @@
 # Install npm packages
-FROM node:18-alpine as builder
+FROM node:20 as builder
 
 WORKDIR /usr/src/app
 
@@ -8,11 +8,9 @@ COPY package.json .
 RUN yarn install --prod
 
 # Push js files
-FROM node:18-alpine
+FROM node:20-slim
 
 WORKDIR /usr/src/app
-
-LABEL maintainer="Kaan Karakaya <ykk@theykk.net>"
 
 COPY --from=builder /usr/src/app/ /usr/src/app/
 
@@ -20,6 +18,8 @@ COPY ./src ./src
 
 COPY ./package.json ./package.json
 
-COPY ./etc ./etc
+COPY ./etc/config.js ./etc/config.js
 
-CMD ["node", "src/index.mjs"]
+EXPOSE 3444
+
+CMD ["node", "src/index.js"]

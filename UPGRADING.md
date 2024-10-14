@@ -1,5 +1,7 @@
 # Upgrading Guide
 
+
+
 ## 2.1.0 to 2.2.0
 - Stop the aplication
 - Get the updates by pulling changes
