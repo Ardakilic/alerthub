@@ -130,5 +130,5 @@ dist
 .pnp.*
 
 
-# App-spesific
+# App-specific
 etc/config.js

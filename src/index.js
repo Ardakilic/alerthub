@@ -170,7 +170,7 @@ feeder.on('new-item', async (item) => {
     if (config.notifications.email.enabled === true) {
       await emailUtils.sendEmailNotification(config.notifications.email, feedData);
     }
-    // Now try to send the telegram notification
+    // Now try to send the Telegram notification
     if (config.notifications.telegram.enabled === true) {
       await telegramUtils.sendTelegramNotification(config.notifications.telegram, feedData);
     }

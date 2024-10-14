@@ -23,24 +23,23 @@ This simple cli tool watches the releases set in config, and notifies you with E
 
 Some people still wonder why this tool, which was released before GitHub release feature announced, yet exists, so I wanted to list the features as a bullet list:
 
-* You can watch GitHub releases, AND tags and commits and issues
-* You can also watch private GitHub repositories by providing an access token
+* You can watch GitHub releases, tags, commits and issues
+* ~~You can also watch private GitHub repositories by providing an access token~~
 * You can watch GitLab tags and commits
 * You can watch 3rd party releases which are neither from GitHub nor GitLab
 * You can get notified with e-mail when a new update to your watch list is published
 * You can also get notified with push notification, using services PushBullet and / or PushOver
+* You can also get notified using Telegram bots. Just put your bot to the channels, or get your chat id, provide the bot token and your updates will be carried through the Telegram bot.
 * You can generate an aggreagated RSS feed with this tool for all your watches, which is sorted by date, and use this aggregated feed to source to your favorite news reader application, or to pipe to services such as IFTTT etc.
 * Self-hosted. Also, no GUI. You can simply set it and forget it
 
 ## Requirements
 
-* NodeJS 10.x or newer
+* NodeJS 20.x or newer
 * (Optional) PushBullet Api Key
 * (Optional) PushOver Api Key
 * (Optional) SMTP credentials to dispatch e-mail
-* (Optional) Personal GitHub Access token to access to private repositories and to increase fetching rate limits
-
-Either one of the PushBullet, PushOver or the SMTP credentials are required to get notifications. RSS feed doesn't require neither.
+* (Optional) Telegram API key and Chat ID for the messages to be dispatched.
 
 ## Installation
 
@@ -57,13 +56,19 @@ You can install and run AlertHub with some simple steps:
 First, you need to get the example config file and modify it accordingly, either get a copy from [this repo](./etc/config.example.js), or with the following command:
 
 ```bash
-docker run --rm ghcr.io/ardakilic/alerthub:2 cat /usr/src/app/etc/config.example.js > /host/path/config.js
+curl https://github.com/Ardakilic/alerthub/raw/refs/heads/master/etc/config.example.js -o config.js
+```
+
+or from inside of the docker:
+
+```bash
+docker run --rm ghcr.io/ardakilic/alerthub:2 cat /app/etc/config.example.js > /host/path/config.js
 ```
 
 To run
 
 ```bash
-docker run --name alerthub -d -v /host/path/config.js:/usr/src/app/etc/config.js -p 3444:3444 ghcr.io/ardakilic/alerthub:2
+docker run --name alerthub -d -v /host/path/config.js:/app/etc/config.js -p 3444:3444 ghcr.io/ardakilic/alerthub:2
 ```
 
 ## Changelog
@@ -76,7 +81,6 @@ Please refer to [UPGRADING.md](./UPGRADING.md).
 
 ## TODOs / Plans
 
-* A portable storage solution such as SQLite etc.
 * ~~Telegram Notifications~~
 * ~~Following GitLab releases~~
 * Following BitBucket releases
@@ -86,6 +90,8 @@ Please refer to [UPGRADING.md](./UPGRADING.md).
 * ~~Following commits and tags in addition to releases~~
 * ~~PushOver integration~~
 * ~~Following commits from a specific branch (GitHub and GitLab)~~
+* Find a way to bring back GitHub private repositories support [#80](https://github.com/Ardakilic/alerthub/issues/80)
+* Gitea support [#88](https://github.com/Ardakilic/alerthub/issues/88)
 * [You say!](https://github.com/Ardakilic/alerthub/issues/new)
 
 ## License
@@ -99,7 +105,5 @@ Donations are kindly accepted to help develop my projects further.
 BTC: 1QFHeSrhWWVhmneDBkArKvpmPohRjpf7p6
 
 ETH / ERC20 Tokens: 0x3C2b0AC49257300DaB96dF8b49d254Bb696B3458
-
-NEO / Nep5 Tokens: AYbHEah5Y4J6BV8Y9wkWJY7cCyHQameaHc
 
 Stellar (XLM): GBTYNE5RDGH44E7VH4DNYB4NV72GCV5VUH6PJLCJY27JZRO2K7XUML2Q
