@@ -8,8 +8,8 @@ COPY package.json .
 RUN yarn install --prod
 
 # Create the final image
-# FROM node:20-slim AS runner
-FROM gcr.io/distroless/nodejs20-debian12:nonroot
+# FROM node:22-slim AS runner
+FROM gcr.io/distroless/nodejs22-debian12:nonroot
 
 WORKDIR /app
 
