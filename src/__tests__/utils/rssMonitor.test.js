@@ -356,6 +356,11 @@ describe("RssMonitor", () => {
       refresh: 1000,
     };
 
+    // Prevent real network and potential unhandled error event
+    jest.spyOn(rssMonitor.parser, "parseURL").mockResolvedValue({ items: [] });
+    // Add a no-op error handler so emitting errors during interval won't crash
+    rssMonitor.on("error", () => {});
+
     // Add a feed with interval
     rssMonitor.add(feedConfig);
 
