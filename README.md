@@ -48,6 +48,137 @@ You can install and run AlertHub with some simple steps:
 1. Clone this repository or get the latest release version.
 2. Navigate to the repository's folder, and run `npm install` to install dependencies.
 3. Copy `.env.example` to `.env` and fill in your configuration values.
+
+## Development with Docker
+
+AlertHub includes a comprehensive Makefile that runs all commands through Docker, ensuring a consistent development environment across different systems.
+
+### Prerequisites
+
+- Docker installed on your system
+- No need for Node.js locally - everything runs in containers
+
+### Quick Start
+
+```bash
+# Clone the repository
+git clone https://github.com/Ardakilic/alerthub.git
+cd alerthub
+
+# Install dependencies
+make install
+
+# Initialize environment file
+make init
+
+# Run tests
+make test
+
+# Run tests with coverage
+make test-coverage
+
+# Run linting
+make lint
+
+# Fix linting issues automatically
+make lint-fix
+
+# Start the application
+make start
+```
+
+### Available Make Commands
+
+| Command | Description | Docker Equivalent |
+|---------|-------------|-------------------|
+| `make help` | Show all available commands | - |
+| `make install` | Install dependencies | `docker run ... npm install` |
+| `make test` | Run all tests | `docker run ... npm test` |
+| `make test-watch` | Run tests in watch mode | `docker run ... npm run test:watch` |
+| `make test-coverage` | Run tests with coverage report | `docker run ... npm run test:coverage` |
+| `make lint` | Run code linting | `docker run ... npm run lint` |
+| `make lint-fix` | Auto-fix linting issues | `docker run ... npm run lint:fix` |
+| `make start` | Start the application | `docker run ... npm start` |
+| `make init` | Initialize .env file | `docker run ... npm run init` |
+| `make clean` | Clean node_modules and coverage | `docker run ... rm -rf node_modules coverage` |
+| `make shell` | Open interactive shell in container | `docker run -it ... /bin/bash` |
+| `make check` | Run lint + test | `make lint test` |
+| `make check-all` | Run lint + test with coverage | `make lint test-coverage` |
+
+### Testing
+
+The project includes comprehensive test suites for all utilities:
+
+```bash
+# Run all tests
+make test
+
+# Run tests with detailed coverage report
+make test-coverage
+
+# Watch mode for development
+make test-watch
+
+# Run specific test files (using shell)
+make shell
+npm test rssGenerator.test.js
+npm test rssMonitor.test.js
+```
+
+### Code Quality
+
+The project uses Biome for fast linting and formatting:
+
+```bash
+# Check code quality
+make lint
+
+# Automatically fix issues
+make lint-fix
+
+# Check everything (lint + test + coverage)
+make check-all
+```
+
+### Docker Details
+
+All commands run in a Node.js 22 container with:
+- **Image**: `node:22`
+- **Working Directory**: `/app` (mapped to your project folder)
+- **Environment**: `NODE_OPTIONS="--experimental-vm-modules"` for ES modules support
+- **Volume Mount**: Your project directory is mounted for live development
+
+### Manual Docker Commands
+
+If you prefer running Docker commands directly:
+
+```bash
+# Run tests with coverage
+docker run --rm -v "$(pwd)":/app -w /app -e NODE_OPTIONS="--experimental-vm-modules" node:22 npm run test:coverage
+
+# Run linting
+docker run --rm -v "$(pwd)":/app -w /app -e NODE_OPTIONS="--experimental-vm-modules" node:22 npm run lint
+
+# Start the application
+docker run --rm -v "$(pwd)":/app -w /app -e NODE_OPTIONS="--experimental-vm-modules" node:22 npm start
+
+# Interactive shell for debugging
+docker run --rm -it -v "$(pwd)":/app -w /app -e NODE_OPTIONS="--experimental-vm-modules" node:22 /bin/bash
+```
+
+### CI/CD Integration
+
+For continuous integration, use the CI-specific targets:
+
+```bash
+# Run complete test suite with coverage for CI
+make ci-test
+
+# Run linting for CI
+make ci-lint
+```
+
+These generate coverage reports in the `./coverage/` directory that can be uploaded to coverage services.
 4. Run `npm start` or something like `pm2 start npm -- start` and run the application.
 
 ## Configuration

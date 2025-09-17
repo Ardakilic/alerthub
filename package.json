@@ -7,7 +7,9 @@
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage",
+    "test:coverage": "jest --coverage --coverageReporters=text --coverageReporters=json-summary",
+    "lint": "npx @biomejs/biome check src/",
+    "lint:fix": "npx @biomejs/biome check --fix src/",
     "init": "cp .env.example .env",
     "start": "node ./src/index.js"
   },
@@ -19,14 +21,14 @@
   },
   "dependencies": {
     "dotenv": "^17.2.2",
+    "feed": "^5.1.0",
     "node-telegram-bot-api": "^0.66.0",
     "nodemailer": "^7.0.0",
     "pino": "^9.9.5",
     "pino-pretty": "^13.1.1",
     "pushbullet": "^3.0.0",
     "pushover-notifications": "^1.2.3",
-    "rss-braider": "^1.2.4",
-    "rss-feed-emitter": "^3.2.3",
+    "rss-parser": "^3.13.0",
     "striptags": "^3.2.0"
   },
   "engines": {
