@@ -1,8 +1,13 @@
 import { EventEmitter } from "node:events";
-import { afterEach, describe, expect, jest, test } from "@jest/globals";
+import { afterEach, beforeEach, describe, expect, jest, test } from "@jest/globals";
 
 describe("RssMonitor", () => {
   let rssMonitor;
+
+  beforeEach(() => {
+    // Clear all mocks before each test
+    jest.clearAllMocks();
+  });
 
   afterEach(() => {
     if (rssMonitor) {
@@ -43,6 +48,12 @@ describe("RssMonitor", () => {
     const { default: RssMonitor } = await import("../../utils/rssMonitor.js");
     rssMonitor = new RssMonitor();
 
+    // Mock startMonitoring instead of fetchFeed to prevent intervals
+    jest.spyOn(rssMonitor, 'startMonitoring').mockImplementation(() => {});
+
+    // Add error handler to prevent unhandled errors
+    rssMonitor.on('error', () => {});
+
     const feedConfig = {
       url: "https://example.com/feed.xml",
       refresh: 30000,
@@ -52,11 +63,15 @@ describe("RssMonitor", () => {
     rssMonitor.add(feedConfig);
 
     expect(rssMonitor.feeds.has(feedConfig.url)).toBe(true);
-  });
-
-  test("should use default values when adding feed", async () => {
+  });  test("should use default values when adding feed", async () => {
     const { default: RssMonitor } = await import("../../utils/rssMonitor.js");
     rssMonitor = new RssMonitor();
+
+    // Mock fetchFeed to prevent network calls
+    jest.spyOn(rssMonitor, 'startMonitoring').mockImplementation(() => {});
+
+    // Add error handler to prevent unhandled errors
+    rssMonitor.on('error', () => {});
 
     const feedConfig = {
       url: "https://example.com/feed.xml",
@@ -73,6 +88,12 @@ describe("RssMonitor", () => {
     const { default: RssMonitor } = await import("../../utils/rssMonitor.js");
     rssMonitor = new RssMonitor();
 
+    // Mock fetchFeed to prevent network calls
+    jest.spyOn(rssMonitor, 'startMonitoring').mockImplementation(() => {});
+
+    // Add error handler to prevent unhandled errors
+    rssMonitor.on('error', () => {});
+
     const feedConfig = {
       url: "https://example.com/feed.xml",
     };
@@ -86,6 +107,9 @@ describe("RssMonitor", () => {
   test("should provide list of monitored feeds", async () => {
     const { default: RssMonitor } = await import("../../utils/rssMonitor.js");
     rssMonitor = new RssMonitor();
+
+    // Mock fetchFeed to prevent network calls
+    jest.spyOn(rssMonitor, 'startMonitoring').mockImplementation(() => {});
 
     // Add error handler to prevent unhandled errors
     rssMonitor.on("error", () => {});
@@ -118,6 +142,9 @@ describe("RssMonitor", () => {
   test("should destroy all feeds and clear intervals", async () => {
     const { default: RssMonitor } = await import("../../utils/rssMonitor.js");
     rssMonitor = new RssMonitor();
+
+    // Mock fetchFeed to prevent network calls
+    jest.spyOn(rssMonitor, 'startMonitoring').mockImplementation(() => {});
 
     // Add error handler to prevent unhandled errors
     rssMonitor.on("error", () => {});
