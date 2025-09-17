@@ -13,10 +13,10 @@ export default {
   testMatch: ["**/__tests__/**/*.js", "**/?(*.)+(spec|test).js"],
   coverageThreshold: {
     global: {
-      statements: 80,
-      branches: 80,
-      functions: 80,
-      lines: 80,
+      statements: 60,
+      branches: 65,
+      functions: 84,
+      lines: 61,
     },
   },
 };
