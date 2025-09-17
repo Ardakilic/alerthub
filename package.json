@@ -3,9 +3,11 @@
   "version": "2.2.3",
   "description": "A tool to send notifications when an update to a repository is released",
   "main": "./src/index.js",
-  "type": "commonjs",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
     "init": "cp ./etc/config.example.js ./etc/config.js",
     "start": "node ./src/index.js"
   },
@@ -25,9 +27,11 @@
     "striptags": "^3.2.0"
   },
   "engines": {
-    "node": ">=20.18.0"
+    "node": ">=22.19.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.2.4"
+    "@biomejs/biome": "2.2.4",
+    "@jest/globals": "^30.1.2",
+    "jest": "^30.1.3"
   }
 }

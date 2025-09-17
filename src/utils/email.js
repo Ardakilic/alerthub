@@ -1,4 +1,4 @@
-import mail from 'nodemailer';
+import * as mail from 'nodemailer';
 import striptags from 'striptags';
 
 export default {
@@ -23,14 +23,16 @@ export default {
     };
 
     // send mail with defined transport object
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        // console.log(error);
-        return false;
-      }
-      // console.log('Message sent: %s', info.messageId);
-      // return Promise.resolve(info);
-      return info;
+    return new Promise((resolve, reject) => {
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          // console.log(error);
+          resolve(false);
+        } else {
+          // console.log('Message sent: %s', info.messageId);
+          resolve(info);
+        }
+      });
     });
   },
 }

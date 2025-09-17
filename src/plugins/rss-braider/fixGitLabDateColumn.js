@@ -1,4 +1,4 @@
-module.exports = (item, itemOptions, /* source */) => {
+export default (item, itemOptions, /* source */) => {
   if (
     itemOptions.date === null
     && item.meta !== undefined

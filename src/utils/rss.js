@@ -1,10 +1,21 @@
-const rssBraider = require('rss-braider');
-const path = require('node:path');
-const alertHubUtils = require('./alertHub');
+import rssBraider from 'rss-braider';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import alertHubUtils from './alertHub.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Creates a RSS feed from the configuration provided
-function createRSSFeed(config) {
-  if (config.rss.enabled === true) {
+class RssUtils {
+  constructor(config = null) {
+    this.config = config;
+  }
+
+  async createRSSFeed(config = null) {
+    const rssConfig = config || this.config;
+
+    if (rssConfig.rss.enabled === true) {
     const AlertHubFeeds = {
       alertHub: {
         feed_name: 'AlertHub',
@@ -12,25 +23,25 @@ function createRSSFeed(config) {
         no_cdata_fields: [], // Don't wrap these fields in CDATA tags
         plugins: ['fixGitLabDateColumn', 'addReleaseNameToTitle'],
         meta: {
-          title: config.rss.title,
-          description: config.rss.description,
+          title: rssConfig.rss.title,
+          description: rssConfig.rss.description,
           generator: 'AlertHub',
-          site_url: config.rss.siteUrl,
-          feed_url: config.rss.feedUrl,
+          site_url: rssConfig.rss.siteUrl,
+          feed_url: rssConfig.rss.feedUrl,
         },
         sources: [], // this will be filled below
       },
     };
 
     // GitHub feeds
-    for(type of Object.keys(config.repositories.github)) {
+    for(const type of Object.keys(rssConfig.repositories.github)) {
       if (type === 'commits') {
-        for(repository of Object.keys(config.repositories.github[type])) {
-          for(subType of config.repositories.github[type][repository]) {
+        for(const repository of Object.keys(rssConfig.repositories.github[type])) {
+          for(const subType of rssConfig.repositories.github[type][repository]) {
             if (subType === '*') {
               AlertHubFeeds.alertHub.sources.push({
                 name: `github-${type}-${repository}-all`,
-                count: config.rss.includeFromEachRepository,
+                count: rssConfig.rss.includeFromEachRepository,
                 feed_url: alertHubUtils.generateURLForTheFeed({
                   resource: 'github',
                   repository,
@@ -40,7 +51,7 @@ function createRSSFeed(config) {
             } else {
               AlertHubFeeds.alertHub.sources.push({
                 name: `github-${type}-${repository}-${subType}`,
-                count: config.rss.includeFromEachRepository,
+                count: rssConfig.rss.includeFromEachRepository,
                 feed_url: alertHubUtils.generateURLForTheFeed({
                   resource: 'github',
                   repository,
@@ -52,23 +63,23 @@ function createRSSFeed(config) {
           }
         }
       } else if (type === 'issues') {
-        for(repository of Object.keys(config.repositories.github[type])) {
+        for(const repository of Object.keys(rssConfig.repositories.github[type])) {
           AlertHubFeeds.alertHub.sources.push({
             name: `github-${type}-${repository}`,
-            count: config.rss.includeFromEachRepository,
+            count: rssConfig.rss.includeFromEachRepository,
             feed_url: alertHubUtils.generateURLForTheFeed({
               resource: 'github',
               repository,
               type,
-              params: config.repositories.github[type][repository],
+              params: rssConfig.repositories.github[type][repository],
             }, /*config*/),
           });
         }
       } else {
-        for(repository of config.repositories.github[type]) {
+        for(const repository of rssConfig.repositories.github[type]) {
           AlertHubFeeds.alertHub.sources.push({
             name: `github-${type}-${repository}`,
-            count: config.rss.includeFromEachRepository,
+            count: rssConfig.rss.includeFromEachRepository,
             feed_url: alertHubUtils.generateURLForTheFeed({
               resource: 'github',
               repository,
@@ -80,13 +91,13 @@ function createRSSFeed(config) {
     }
 
     // GitLab feeds
-    for(type of Object.keys(config.repositories.gitlab)) {
+    for(const type of Object.keys(rssConfig.repositories.gitlab)) {
       if (type === 'commits') {
-        for(repository of Object.keys(config.repositories.gitlab[type])) {
-          for(subType of config.repositories.gitlab[type][repository]) {
+        for(const repository of Object.keys(rssConfig.repositories.gitlab[type])) {
+          for(const subType of rssConfig.repositories.gitlab[type][repository]) {
             AlertHubFeeds.alertHub.sources.push({
               name: `gitlab-${type}-${repository}-${subType}`,
-              count: config.rss.includeFromEachRepository,
+              count: rssConfig.rss.includeFromEachRepository,
               feed_url: alertHubUtils.generateURLForTheFeed({
                 resource: 'gitlab',
                 repository,
@@ -97,10 +108,10 @@ function createRSSFeed(config) {
           }
         }
       } else {
-        for(repository of config.repositories.gitlab[type]) {
+        for(const repository of rssConfig.repositories.gitlab[type]) {
           AlertHubFeeds.alertHub.sources.push({
             name: `gitlab-${type}-${repository}`,
-            count: config.rss.includeFromEachRepository,
+            count: rssConfig.rss.includeFromEachRepository,
             feed_url: alertHubUtils.generateURLForTheFeed({
               resource: 'gitlab',
               repository,
@@ -112,10 +123,10 @@ function createRSSFeed(config) {
     }
 
     // Extra feeds
-    for(feed of config.rss.extras) {
+    for(const feed of rssConfig.rss.extras) {
       AlertHubFeeds.alertHub.sources.push({
         name: Math.random().toString(26).slice(2), // Well, there's no name, so here goes randomness
-        count: config.rss.includeFromEachRepository,
+        count: rssConfig.rss.includeFromEachRepository,
         feed_url: feed,
       });
     }
@@ -131,7 +142,7 @@ function createRSSFeed(config) {
     const rssClient = rssBraider.createClient(braiderOptions);
 
     // Override logging level (debug, info, warn, err, off)
-    rssClient.logger.level(config.rss.logLevel || 'info');
+    rssClient.logger.level(rssConfig.rss.logLevel || 'info');
 
     // Let's make a promise
     const process = new Promise((resolve, reject) => {
@@ -152,8 +163,7 @@ function createRSSFeed(config) {
 
   // If RSS output is disabled, empty string will be returned
   return Promise.resolve('');
+  }
 }
 
-export default {
-  createRSSFeed,
-};
+export default RssUtils;

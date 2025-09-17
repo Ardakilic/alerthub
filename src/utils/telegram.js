@@ -5,7 +5,12 @@ export default {
   async sendTelegramNotification(config, feedData) {
     const bot = new TelegramBot(config.config.token, { polling: false });
 
-    bot.sendMessage(config.config.chatId, `${feedData.title}\n\n${feedData.description}\n\n${feedData.link}`);
-    return true;
+    try {
+      const result = await bot.sendMessage(config.config.chatId, `${feedData.title}\n\n${feedData.description}\n\n${feedData.link}`);
+      return result;
+    } catch (error) {
+      console.error('Telegram notification failed:', error);
+      return false;
+    }
   }
 }

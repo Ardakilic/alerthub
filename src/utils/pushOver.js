@@ -1,7 +1,7 @@
 import PushOver from 'pushover-notifications';
 import striptags from 'striptags';
 
-module.exports = {
+export default {
   // Send the push notification.
   async sendPushOverNotification(config, feedData) {
     return new Promise((resolve, reject) => {

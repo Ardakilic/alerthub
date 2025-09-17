@@ -14,6 +14,9 @@ export default {
   },
 
   isFeedFromGitLab(item) {
+    if (!item.url || typeof item.url !== 'string') {
+      return false;
+    }
     const parsedURL = URL.parse(item.url);
     if (parsedURL.hostname === 'gitlab.com') {
       return true;

@@ -1,0 +1,74 @@
+name: Test Suite
+
+on:
+  pull_request:
+    branches: [ master ]
+  push:
+    branches: [ master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [22.19.0]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Run tests with coverage
+      run: npm run test:coverage
+      env:
+        NODE_OPTIONS: --experimental-vm-modules
+
+    - name: Check coverage threshold
+      run: |
+        # Extract coverage percentage from coverage output
+        COVERAGE=$(npm run test:coverage --silent 2>&1 | grep -oP "All files\s+\|\s+\K\d+\.\d+" | head -1)
+        echo "Coverage: $COVERAGE%"
+
+        # Check if coverage is at least 80%
+        if (( $(echo "$COVERAGE >= 80" | bc -l) )); then
+          echo "✅ Coverage meets requirement (≥80%): $COVERAGE%"
+        else
+          echo "❌ Coverage below requirement (<80%): $COVERAGE%"
+          exit 1
+        fi
+
+    - name: Upload coverage reports
+      uses: codecov/codecov-action@v3
+      with:
+        file: ./coverage/lcov.info
+        flags: unittests
+        name: codecov-umbrella
+        fail_ci_if_error: false
+
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 22.x
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Run Biome linter
+      run: npx @biomejs/biome check src/
