@@ -2,6 +2,7 @@ import PushBullet from "pushbullet";
 
 // Strip tags is to remove HTML before sending to Pushbullet.
 import striptags from "striptags";
+import logger from "./logger.js";
 
 // Send the push notification.
 export default {
@@ -16,9 +17,10 @@ export default {
         striptags(feedData.description),
         (error, response) => {
           if (error) {
+            logger.error({ error }, "Failed to send PushBullet notification");
             resolve(false);
           } else {
-            // console.log('Push notification sent successfully!');
+            logger.info("PushBullet notification sent successfully");
             resolve(response);
           }
         },

@@ -8,7 +8,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    "init": "cp ./etc/config.example.js ./etc/config.js",
+    "init": "cp .env.example .env",
     "start": "node ./src/index.js"
   },
   "author": "Arda Kilicdagi",
@@ -18,8 +18,11 @@
     "url": "https://github.com/Ardakilic/alerthub.git"
   },
   "dependencies": {
+    "dotenv": "^17.2.2",
     "node-telegram-bot-api": "^0.66.0",
     "nodemailer": "^7.0.0",
+    "pino": "^9.9.5",
+    "pino-pretty": "^13.1.1",
     "pushbullet": "^3.0.0",
     "pushover-notifications": "^1.2.3",
     "rss-braider": "^1.2.4",

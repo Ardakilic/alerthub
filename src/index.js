@@ -5,6 +5,7 @@ import RssFeedEmitter from "rss-feed-emitter";
 import config from "../etc/config.js";
 import alertHubUtils from "./utils/alertHub.js";
 import emailUtils from "./utils/email.js";
+import logger from "./utils/logger.js";
 import pushBulletUtils from "./utils/pushBullet.js";
 import pushOverUtils from "./utils/pushOver.js";
 import RssUtils from "./utils/rss.js";
@@ -18,7 +19,7 @@ const feeder = new RssFeedEmitter({
 });
 
 const bootDate = new Date();
-console.log(`Application booted at ${bootDate.toUTCString()}`);
+logger.info({ timestamp: bootDate.toUTCString() }, "Application booted");
 
 // GitHub feeds
 for (const type of Object.keys(config.repositories.github)) {
@@ -158,7 +159,7 @@ feeder.on("new-item", async (item) => {
   const date = new Date(item.date);
   // Let's compare the dates and make sure the feed is a new feed.
   if (date.getTime() > bootDate.getTime()) {
-    console.log(`New release found! ${item.title}!`);
+    logger.info({ title: item.title, date: item.date }, "New release found");
 
     const feedData = alertHubUtils.parseFeedData(item);
 
@@ -190,13 +191,18 @@ feeder.on("new-item", async (item) => {
       );
     }
 
-    console.log(`Successfully notified about the release: ${item.title}!`);
+    logger.info(
+      { title: item.title },
+      "Successfully notified about the release",
+    );
   }
 });
 // Notification part END
 
 // Handling errors on feed emitter
-feeder.on("error", console.error);
+feeder.on("error", (error) => {
+  logger.error({ error }, "Feed emitter error");
+});
 // Error handling, currently done to console
 
 // Let's handle the aggregated RSS part
@@ -211,5 +217,5 @@ if (config.rss.enabled === true) {
       });
     })
     .listen(config.rss.port);
-  console.log(`AlertHub RSS Feed server running at port ${config.rss.port}`);
+  logger.info({ port: config.rss.port }, "AlertHub RSS Feed server running");
 }

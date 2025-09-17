@@ -47,28 +47,102 @@ You can install and run AlertHub with some simple steps:
 
 1. Clone this repository or get the latest release version.
 2. Navigate to the repository's folder, and run `npm install` to install dependencies.
-3. Run `npm run init` to copy the configuration file.
-4. Edit `/etc/config.js`, and fill your credentials.
-5. Run `npm start` or something like `pm2 start npm -- start` and run the application.
+3. Copy `.env.example` to `.env` and fill in your configuration values.
+4. Run `npm start` or something like `pm2 start npm -- start` and run the application.
+
+## Configuration
+
+AlertHub now uses environment variables for configuration. Copy the `.env.example` file to `.env` and modify the values according to your needs:
+
+```bash
+cp .env.example .env
+```
+
+### Environment Variables
+
+The configuration supports the following environment variables:
+
+#### Application Settings
+- `INTERVAL`: Feed check interval in milliseconds (default: 60000)
+- `USER_AGENT`: User agent string for HTTP requests
+- `GITHUB_TOKEN`: GitHub token to bypass rate limits and access private repos
+- `LOG_LEVEL`: Logging level (debug, info, warn, error) (default: info)
+
+#### Notification Settings
+**PushBullet:**
+- `PUSHBULLET_ENABLED`: Enable PushBullet notifications (true/false)
+- `PUSHBULLET_ACCESS_TOKEN`: Your PushBullet access token
+
+**PushOver:**
+- `PUSHOVER_ENABLED`: Enable PushOver notifications (true/false)
+- `PUSHOVER_USER`: PushOver user key
+- `PUSHOVER_TOKEN`: PushOver application token
+
+**Email:**
+- `EMAIL_ENABLED`: Enable email notifications (true/false, default: true)
+- `EMAIL_HOST`: SMTP server hostname
+- `EMAIL_PORT`: SMTP server port (default: 465)
+- `EMAIL_SECURE`: Use secure connection (true/false, default: true)
+- `EMAIL_AUTH_USER`: SMTP username
+- `EMAIL_AUTH_PASS`: SMTP password
+- `EMAIL_FROM`: From email address
+- `EMAIL_TO`: Recipient email address(es)
+- `EMAIL_SUBJECT_PREFIX`: Subject line prefix
+
+**Telegram:**
+- `TELEGRAM_ENABLED`: Enable Telegram notifications (true/false)
+- `TELEGRAM_TOKEN`: Telegram bot token
+- `TELEGRAM_CHAT_ID`: Telegram chat ID
+
+#### RSS Feed Settings
+- `RSS_ENABLED`: Enable RSS feed server (true/false, default: true)
+- `RSS_PORT`: RSS server port (default: 3444)
+- `RSS_TITLE`: RSS feed title
+- `RSS_DESCRIPTION`: RSS feed description
+- `RSS_INCLUDE_FROM_EACH_REPOSITORY`: Number of releases per repository (default: 10)
+- `RSS_COUNT`: Total number of items in feed (default: 50)
+- `RSS_SITE_URL`: Site URL for the RSS feed
+- `RSS_FEED_URL`: Feed URL for self-reference
+
+#### Repository Configuration
+For repositories, you can use JSON format in environment variables:
+
+- `GITHUB_RELEASES`: JSON array of GitHub repositories for releases
+- `GITHUB_TAGS`: JSON array of GitHub repositories for tags
+- `GITHUB_COMMITS`: JSON object mapping repositories to branch arrays
+- `GITHUB_ISSUES`: JSON object mapping repositories to issue filter objects
+- `GITLAB_TAGS`: JSON array of GitLab repositories for tags
+- `GITLAB_COMMITS`: JSON object mapping repositories to branch arrays
+- `EXTRAS`: JSON array of direct RSS feed URLs
+
+Example:
+```bash
+GITHUB_RELEASES='["Ardakilic/alerthub","expressjs/express"]'
+GITHUB_COMMITS='{"laravel/laravel":["*"],"acikkaynak/acikkaynak":["master"]}'
+```
 
 ## Docker Container
 
-First, you need to get the example config file and modify it accordingly, either get a copy from [this repo](./etc/config.example.js), or with the following command:
+### Using Environment Variables (Recommended)
+
+Create a `.env` file with your configuration and run:
 
 ```bash
-curl https://github.com/Ardakilic/alerthub/raw/refs/heads/master/etc/config.example.js -o config.js
+docker run --name alerthub -d --env-file .env -p 3444:3444 ghcr.io/ardakilic/alerthub:2
 ```
 
-or from inside of the docker:
+### Using Individual Environment Variables
 
 ```bash
-docker run --rm ghcr.io/ardakilic/alerthub:2 cat /app/etc/config.example.js > /host/path/config.js
-```
-
-To run
-
-```bash
-docker run --name alerthub -d -v /host/path/config.js:/app/etc/config.js -p 3444:3444 ghcr.io/ardakilic/alerthub:2
+docker run --name alerthub -d \
+  -e GITHUB_RELEASES='["Ardakilic/alerthub","expressjs/express"]' \
+  -e EMAIL_ENABLED=true \
+  -e EMAIL_HOST=smtp.example.com \
+  -e EMAIL_AUTH_USER=your@email.com \
+  -e EMAIL_AUTH_PASS=yourpassword \
+  -e EMAIL_TO=recipient@email.com \
+  -p 3444:3444 \
+  ghcr.io/ardakilic/alerthub:2
 ```
 
 ## Changelog

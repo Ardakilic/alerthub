@@ -2,6 +2,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import rssBraider from "rss-braider";
 import alertHubUtils from "./alertHub.js";
+import logger from "./logger.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -172,12 +173,15 @@ class RssUtils {
       const process = new Promise((resolve, reject) => {
         rssClient.processFeed("alertHub", "rss", (err, data) => {
           if (err) {
-            // console.log(err);
+            logger.error({ error: err }, "Failed to process RSS feed");
             reject(err);
 
             return;
           }
-          // console.log(data);
+          logger.debug(
+            { dataLength: data?.length },
+            "RSS feed processed successfully",
+          );
           resolve(data);
         });
       });

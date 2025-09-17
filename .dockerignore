@@ -1,4 +1,7 @@
-# App-specific
+# App-specific
+.env
+
+# Repo-specificp-specific
 etc/config.js
 
 # Repo-specific

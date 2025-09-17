@@ -1,5 +1,6 @@
 import * as mail from "nodemailer";
 import striptags from "striptags";
+import logger from "./logger.js";
 
 export default {
   // Sends and e-mail notification to provided user
@@ -8,7 +9,7 @@ export default {
 
     /* await smtp.verify((error, success) => {
       if (error) {
-        // console.log(error);
+        logger.error({ error }, 'SMTP verification failed');
         return false;
       }
       // successful smtp
@@ -29,10 +30,10 @@ export default {
     return new Promise((resolve, _reject) => {
       transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
-          // console.log(error);
+          logger.error({ error }, "Failed to send email");
           resolve(false);
         } else {
-          // console.log('Message sent: %s', info.messageId);
+          logger.info({ messageId: info.messageId }, "Email sent successfully");
           resolve(info);
         }
       });
