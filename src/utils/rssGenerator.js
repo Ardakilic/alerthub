@@ -287,10 +287,19 @@ class RssGenerator {
    * @private
    */
   fixGitLabDateColumn(item) {
-    // GitLab date fixing logic would go here
-    // For now, just ensure we have a valid date
+    // Attempt to fix GitLab-specific date issues
+    // Try common GitLab date fields if date is missing or invalid
     if (!item.date || item.date === "Invalid Date") {
-      item.date = new Date().toISOString();
+      // Check for GitLab-specific fields
+      if (item.updated) {
+        item.date = new Date(item.updated).toISOString();
+      } else if (item.created_at) {
+        item.date = new Date(item.created_at).toISOString();
+      } else if (item.published) {
+        item.date = new Date(item.published).toISOString();
+      } else {
+        item.date = new Date().toISOString();
+      }
     }
     return item;
   }
