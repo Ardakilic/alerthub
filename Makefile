@@ -62,7 +62,7 @@ clean:
 
 .PHONY: shell
 shell:
-	docker run --rm -it -v "$(PROJECT_DIR)":/app -w /app -e NODE_OPTIONS="--experimental-vm-modules" $(DOCKER_IMAGE) /bin/bash
+	docker run --rm -it -v "$(shell pwd)":/app -w /app -e NODE_OPTIONS="--experimental-vm-modules" $(DOCKER_IMAGE) /bin/bash
 
 # CI/CD helpers
 .PHONY: ci-test
@@ -89,5 +89,4 @@ pull:
 .PHONY: docker-info
 docker-info:
 	@echo "Docker image: $(DOCKER_IMAGE)"
-	@echo "Project directory: $(PROJECT_DIR)"
 	@echo "Docker run command: $(DOCKER_RUN)"
