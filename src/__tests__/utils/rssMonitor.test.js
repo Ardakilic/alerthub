@@ -178,7 +178,7 @@ describe("RssMonitor", () => {
       url: "https://example.com/feed.xml",
       refresh: 60000,
       eventName: "new-item",
-      lastItems: new Set(),
+      lastItems: new Map(),
     };
 
     // Mock fetchFeed to avoid actual network calls
@@ -218,7 +218,7 @@ describe("RssMonitor", () => {
     const feed = {
       url: "https://example.com/feed.xml",
       eventName: "new-item",
-      lastItems: new Set(), // Correct property name
+      lastItems: new Map(), // Correct property name
     };
 
     // Mock emit to verify events are fired
@@ -258,7 +258,7 @@ describe("RssMonitor", () => {
     const feed = {
       url: "https://example.com/feed.xml",
       eventName: "new-item",
-      lastItems: new Set(),
+      lastItems: new Map(),
     };
 
     // Mock emit to verify no events are fired on initial load
@@ -288,7 +288,7 @@ describe("RssMonitor", () => {
     const feed = {
       url: "https://example.com/invalid-feed.xml",
       eventName: "new-item",
-      lastItems: new Set(),
+      lastItems: new Map(),
     };
 
     // Mock emit to verify error event
@@ -396,7 +396,7 @@ describe("RssMonitor", () => {
     const feed = {
       url: "https://example.com/feed.xml",
       eventName: "new-item",
-      lastItems: new Set(),
+      lastItems: new Map(),
     };
 
     const emitSpy = jest.spyOn(rssMonitor, "emit");
@@ -434,7 +434,7 @@ describe("RssMonitor", () => {
     const feed = {
       url: "https://example.com/feed.xml",
       eventName: "new-item",
-      lastItems: new Set(),
+      lastItems: new Map(),
     };
 
     const emitSpy = jest.spyOn(rssMonitor, "emit");
@@ -465,7 +465,7 @@ describe("RssMonitor", () => {
     const feed = {
       url: "https://example.com/empty-feed.xml",
       eventName: "new-item",
-      lastItems: new Set(),
+      lastItems: new Map(),
     };
 
     const emitSpy = jest.spyOn(rssMonitor, "emit");

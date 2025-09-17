@@ -46,7 +46,7 @@ class RssMonitor extends EventEmitter {
       refresh,
       eventName,
       interval: null,
-      lastItems: new Set(),
+      lastItems: new Map(), // Map<itemId, timestamp> for proper LRU eviction
     };
 
     this.feeds.set(url, feed);
@@ -152,18 +152,22 @@ class RssMonitor extends EventEmitter {
             );
           }
 
-          // Track this item
-          feed.lastItems.add(itemId);
+          // Track this item with timestamp for LRU eviction
+          feed.lastItems.set(itemId, Date.now());
           this.seenItems.add(itemId);
         }
       }
 
       // Clean up old items to prevent memory leaks (keep last 100)
       if (feed.lastItems.size > 100) {
-        const itemsArray = Array.from(feed.lastItems);
-        const toRemove = itemsArray.slice(0, itemsArray.length - 100);
-        for (const id of toRemove) {
-          feed.lastItems.delete(id);
+        // Convert Map entries to array and sort by timestamp (oldest first)
+        const itemsArray = Array.from(feed.lastItems.entries()).sort(
+          (a, b) => a[1] - b[1],
+        );
+        // Remove oldest items, keeping only the last 100
+        const itemsToRemove = itemsArray.slice(0, itemsArray.length - 100);
+        for (const [itemId] of itemsToRemove) {
+          feed.lastItems.delete(itemId);
         }
       }
 
