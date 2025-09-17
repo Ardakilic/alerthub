@@ -197,6 +197,9 @@ describe("RssMonitor", () => {
     const { default: RssMonitor } = await import("../../utils/rssMonitor.js");
     rssMonitor = new RssMonitor();
 
+    // Add error handler FIRST to prevent unhandled errors
+    rssMonitor.on("error", () => {});
+
     const mockItems = [
       {
         title: "Test Item",
@@ -221,9 +224,6 @@ describe("RssMonitor", () => {
     // Mock emit to verify events are fired
     const emitSpy = jest.spyOn(rssMonitor, "emit");
 
-    // Add error handler to prevent unhandled errors
-    rssMonitor.on("error", () => {});
-
     await rssMonitor.fetchFeed(feed, false);
 
     expect(rssMonitor.parser.parseURL).toHaveBeenCalledWith(feed.url);
@@ -239,6 +239,9 @@ describe("RssMonitor", () => {
   test("should handle fetchFeed with initial load", async () => {
     const { default: RssMonitor } = await import("../../utils/rssMonitor.js");
     rssMonitor = new RssMonitor();
+
+    // Add error handler FIRST to prevent unhandled errors
+    rssMonitor.on("error", () => {});
 
     const mockItems = [
       {
@@ -261,9 +264,6 @@ describe("RssMonitor", () => {
     // Mock emit to verify no events are fired on initial load
     const emitSpy = jest.spyOn(rssMonitor, "emit");
 
-    // Add error handler
-    rssMonitor.on("error", () => {});
-
     await rssMonitor.fetchFeed(feed, true);
 
     // Should not emit events on initial load
@@ -275,6 +275,10 @@ describe("RssMonitor", () => {
   test("should handle fetchFeed error gracefully", async () => {
     const { default: RssMonitor } = await import("../../utils/rssMonitor.js");
     rssMonitor = new RssMonitor();
+
+    // Add error handler FIRST to prevent unhandled errors
+    const errorHandler = jest.fn();
+    rssMonitor.on("error", errorHandler);
 
     // Mock the parser parseURL to throw an error
     jest
@@ -290,12 +294,10 @@ describe("RssMonitor", () => {
     // Mock emit to verify error event
     const emitSpy = jest.spyOn(rssMonitor, "emit");
 
-    // Add error handler to prevent unhandled errors
-    rssMonitor.on("error", () => {});
-
     await rssMonitor.fetchFeed(feed, false);
 
     expect(emitSpy).toHaveBeenCalledWith("error", expect.any(Object));
+    expect(errorHandler).toHaveBeenCalledWith(expect.any(Object));
   });
 
   test("should generate item ID with fallback to title and date", async () => {
@@ -369,6 +371,9 @@ describe("RssMonitor", () => {
     const { default: RssMonitor } = await import("../../utils/rssMonitor.js");
     rssMonitor = new RssMonitor();
 
+    // Add error handler FIRST to prevent unhandled errors
+    rssMonitor.on("error", () => {});
+
     const mockItems = [
       {
         title: "Item without GUID",
@@ -391,9 +396,6 @@ describe("RssMonitor", () => {
 
     const emitSpy = jest.spyOn(rssMonitor, "emit");
 
-    // Add error handler
-    rssMonitor.on("error", () => {});
-
     await rssMonitor.fetchFeed(feed, false);
 
     // Should still emit event using generated ID
@@ -408,6 +410,9 @@ describe("RssMonitor", () => {
   test("should not emit duplicate items on subsequent fetches", async () => {
     const { default: RssMonitor } = await import("../../utils/rssMonitor.js");
     rssMonitor = new RssMonitor();
+
+    // Add error handler FIRST to prevent unhandled errors
+    rssMonitor.on("error", () => {});
 
     const mockItems = [
       {
@@ -429,9 +434,6 @@ describe("RssMonitor", () => {
 
     const emitSpy = jest.spyOn(rssMonitor, "emit");
 
-    // Add error handler
-    rssMonitor.on("error", () => {});
-
     // First fetch - should emit
     await rssMonitor.fetchFeed(feed, false);
     expect(emitSpy).toHaveBeenCalledTimes(1);
@@ -448,6 +450,9 @@ describe("RssMonitor", () => {
     const { default: RssMonitor } = await import("../../utils/rssMonitor.js");
     rssMonitor = new RssMonitor();
 
+    // Add error handler FIRST to prevent unhandled errors
+    rssMonitor.on("error", () => {});
+
     jest.spyOn(rssMonitor.parser, "parseURL").mockResolvedValue({
       items: [],
     });
@@ -459,9 +464,6 @@ describe("RssMonitor", () => {
     };
 
     const emitSpy = jest.spyOn(rssMonitor, "emit");
-
-    // Add error handler
-    rssMonitor.on("error", () => {});
 
     await rssMonitor.fetchFeed(feed, false);
 
