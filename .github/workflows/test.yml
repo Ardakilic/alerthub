@@ -35,14 +35,20 @@ jobs:
     - name: Check coverage threshold
       run: |
         # Extract coverage percentage from coverage output
-        COVERAGE=$(npm run test:coverage --silent 2>&1 | grep -oP "All files\s+\|\s+\K\d+\.\d+" | head -1)
+        COVERAGE=$(npm run test:coverage --silent 2>&1 | grep "All files" | grep -oE '[0-9]+(\.[0-9]+)?' | head -1)
         echo "Coverage: $COVERAGE%"
 
-        # Check if coverage is at least 80%
-        if (( $(echo "$COVERAGE >= 80" | bc -l) )); then
-          echo "✅ Coverage meets requirement (≥80%): $COVERAGE%"
+        # Check if coverage is at least 80% (convert to integer for comparison)
+        if [ -n "$COVERAGE" ]; then
+          COVERAGE_INT=$(echo "$COVERAGE" | cut -d'.' -f1)
+          if [ "$COVERAGE_INT" -ge 80 ]; then
+            echo "✅ Coverage meets requirement (≥80%): $COVERAGE%"
+          else
+            echo "❌ Coverage below requirement (<80%): $COVERAGE%"
+            exit 1
+          fi
         else
-          echo "❌ Coverage below requirement (<80%): $COVERAGE%"
+          echo "❌ Could not extract coverage percentage"
           exit 1
         fi
 

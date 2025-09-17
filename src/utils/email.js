@@ -1,5 +1,5 @@
-import * as mail from 'nodemailer';
-import striptags from 'striptags';
+import * as mail from "nodemailer";
+import striptags from "striptags";
 
 export default {
   // Sends and e-mail notification to provided user
@@ -17,13 +17,16 @@ export default {
     const mailOptions = {
       from: config.mailOptions.from,
       to: config.mailOptions.to,
-      subject: config.mailOptions.subjectPrefix.length > 0 ? `${config.mailOptions.subjectPrefix} - ${feedData.title}` : feedData.title,
+      subject:
+        config.mailOptions.subjectPrefix.length > 0
+          ? `${config.mailOptions.subjectPrefix} - ${feedData.title}`
+          : feedData.title,
       text: `${feedData.link}\n${striptags(feedData.description)}`,
       html: `<a target="_blank" href="${feedData.link}">${feedData.title}</a><br><br>${feedData.description}`,
     };
 
     // send mail with defined transport object
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve, _reject) => {
       transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
           // console.log(error);
@@ -35,4 +38,4 @@ export default {
       });
     });
   },
-}
+};

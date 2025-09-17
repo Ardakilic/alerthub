@@ -1,5 +1,5 @@
-import PushOver from 'pushover-notifications';
-import striptags from 'striptags';
+import PushOver from "pushover-notifications";
+import striptags from "striptags";
 
 export default {
   // Send the push notification.
@@ -24,4 +24,4 @@ export default {
       });
     });
   },
-}
+};

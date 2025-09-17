@@ -1,34 +1,34 @@
-import { describe, test, expect } from '@jest/globals';
-import fixGitLabDateColumn from '../../plugins/rss-braider/fixGitLabDateColumn.js';
+import { describe, expect, test } from "@jest/globals";
+import fixGitLabDateColumn from "../../plugins/rss-braider/fixGitLabDateColumn.js";
 
-describe('fixGitLabDateColumn Plugin', () => {
-  test('should set date from meta.date when itemOptions.date is null', () => {
+describe("fixGitLabDateColumn Plugin", () => {
+  test("should set date from meta.date when itemOptions.date is null", () => {
     const item = {
       meta: {
-        date: '2023-01-01T12:00:00Z'
-      }
+        date: "2023-01-01T12:00:00Z",
+      },
     };
     const itemOptions = {
-      title: 'Test Item',
-      date: null
+      title: "Test Item",
+      date: null,
     };
 
     const result = fixGitLabDateColumn(item, itemOptions);
 
     expect(result.date).toBeInstanceOf(Date);
-    expect(result.date.toISOString()).toBe('2023-01-01T12:00:00.000Z');
+    expect(result.date.toISOString()).toBe("2023-01-01T12:00:00.000Z");
   });
 
-  test('should not modify date when itemOptions.date is not null', () => {
-    const existingDate = new Date('2023-02-01T10:00:00Z');
+  test("should not modify date when itemOptions.date is not null", () => {
+    const existingDate = new Date("2023-02-01T10:00:00Z");
     const item = {
       meta: {
-        date: '2023-01-01T12:00:00Z'
-      }
+        date: "2023-01-01T12:00:00Z",
+      },
     };
     const itemOptions = {
-      title: 'Test Item',
-      date: existingDate
+      title: "Test Item",
+      date: existingDate,
     };
 
     const result = fixGitLabDateColumn(item, itemOptions);
@@ -36,79 +36,79 @@ describe('fixGitLabDateColumn Plugin', () => {
     expect(result.date).toBe(existingDate);
   });
 
-  test('should not modify date when item.meta is undefined', () => {
+  test("should not modify date when item.meta is undefined", () => {
     const item = {};
     const itemOptions = {
-      title: 'Test Item',
-      date: null
-    };
-
-    const result = fixGitLabDateColumn(item, itemOptions);
-
-    expect(result.date).toBeNull();
-  });
-
-  test('should not modify date when item.meta.date is undefined', () => {
-    const item = {
-      meta: {}
-    };
-    const itemOptions = {
-      title: 'Test Item',
-      date: null
-    };
-
-    const result = fixGitLabDateColumn(item, itemOptions);
-
-    expect(result.date).toBeNull();
-  });
-
-  test('should not modify date when item.meta.date is null', () => {
-    const item = {
-      meta: {
-        date: null
-      }
-    };
-    const itemOptions = {
-      title: 'Test Item',
-      date: null
-    };
-
-    const result = fixGitLabDateColumn(item, itemOptions);
-
-    expect(result.date).toBeNull();
-  });
-
-  test('should preserve other itemOptions properties', () => {
-    const item = {
-      meta: {
-        date: '2023-01-01T12:00:00Z'
-      }
-    };
-    const itemOptions = {
-      title: 'Test Item',
+      title: "Test Item",
       date: null,
-      description: 'Test description',
-      url: 'https://example.com',
-      author: 'test-author'
     };
 
     const result = fixGitLabDateColumn(item, itemOptions);
 
-    expect(result.title).toBe('Test Item');
-    expect(result.description).toBe('Test description');
-    expect(result.url).toBe('https://example.com');
-    expect(result.author).toBe('test-author');
+    expect(result.date).toBeNull();
   });
 
-  test('should handle different date formats', () => {
+  test("should not modify date when item.meta.date is undefined", () => {
     const item = {
-      meta: {
-        date: '2023-12-25'
-      }
+      meta: {},
     };
     const itemOptions = {
-      title: 'Test Item',
-      date: null
+      title: "Test Item",
+      date: null,
+    };
+
+    const result = fixGitLabDateColumn(item, itemOptions);
+
+    expect(result.date).toBeNull();
+  });
+
+  test("should not modify date when item.meta.date is null", () => {
+    const item = {
+      meta: {
+        date: null,
+      },
+    };
+    const itemOptions = {
+      title: "Test Item",
+      date: null,
+    };
+
+    const result = fixGitLabDateColumn(item, itemOptions);
+
+    expect(result.date).toBeNull();
+  });
+
+  test("should preserve other itemOptions properties", () => {
+    const item = {
+      meta: {
+        date: "2023-01-01T12:00:00Z",
+      },
+    };
+    const itemOptions = {
+      title: "Test Item",
+      date: null,
+      description: "Test description",
+      url: "https://example.com",
+      author: "test-author",
+    };
+
+    const result = fixGitLabDateColumn(item, itemOptions);
+
+    expect(result.title).toBe("Test Item");
+    expect(result.description).toBe("Test description");
+    expect(result.url).toBe("https://example.com");
+    expect(result.author).toBe("test-author");
+  });
+
+  test("should handle different date formats", () => {
+    const item = {
+      meta: {
+        date: "2023-12-25",
+      },
+    };
+    const itemOptions = {
+      title: "Test Item",
+      date: null,
     };
 
     const result = fixGitLabDateColumn(item, itemOptions);
@@ -119,33 +119,33 @@ describe('fixGitLabDateColumn Plugin', () => {
     expect(result.date.getDate()).toBe(25);
   });
 
-  test('should handle invalid date strings gracefully', () => {
+  test("should handle invalid date strings gracefully", () => {
     const item = {
       meta: {
-        date: 'not-a-valid-date'
-      }
+        date: "not-a-valid-date",
+      },
     };
     const itemOptions = {
-      title: 'Test Item',
-      date: null
+      title: "Test Item",
+      date: null,
     };
 
     const result = fixGitLabDateColumn(item, itemOptions);
 
     expect(result.date).toBeInstanceOf(Date);
-    expect(isNaN(result.date.getTime())).toBe(true); // Invalid Date
+    expect(Number.isNaN(result.date.getTime())).toBe(true); // Invalid Date
   });
 
-  test('should handle numeric timestamps', () => {
+  test("should handle numeric timestamps", () => {
     const timestamp = 1672574400000; // 2023-01-01T12:00:00.000Z
     const item = {
       meta: {
-        date: timestamp
-      }
+        date: timestamp,
+      },
     };
     const itemOptions = {
-      title: 'Test Item',
-      date: null
+      title: "Test Item",
+      date: null,
     };
 
     const result = fixGitLabDateColumn(item, itemOptions);
@@ -154,15 +154,15 @@ describe('fixGitLabDateColumn Plugin', () => {
     expect(result.date.getTime()).toBe(timestamp);
   });
 
-  test('should not modify original itemOptions object', () => {
+  test("should not modify original itemOptions object", () => {
     const item = {
       meta: {
-        date: '2023-01-01T12:00:00Z'
-      }
+        date: "2023-01-01T12:00:00Z",
+      },
     };
     const itemOptions = {
-      title: 'Test Item',
-      date: null
+      title: "Test Item",
+      date: null,
     };
 
     const originalItemOptions = { ...itemOptions };
