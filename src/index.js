@@ -1,18 +1,18 @@
 // First, let's require the libraries
 
 import http from "node:http";
-import RssFeedEmitter from "rss-feed-emitter";
 import config from "../etc/config.js";
 import alertHubUtils from "./utils/alertHub.js";
 import emailUtils from "./utils/email.js";
 import logger from "./utils/logger.js";
 import pushBulletUtils from "./utils/pushBullet.js";
 import pushOverUtils from "./utils/pushOver.js";
-import RssUtils from "./utils/rss.js";
+import RssGenerator from "./utils/rssGenerator.js";
+import RssMonitor from "./utils/rssMonitor.js";
 import telegramUtils from "./utils/telegram.js";
 
-// RSS Feed emitter to watch and parse feed
-const feeder = new RssFeedEmitter({
+// RSS Monitor to watch and parse feeds
+const feeder = new RssMonitor({
   userAgent:
     config.userAgent ||
     "Mozilla/5.0 (Linux x86_64; rv:76.0) Gecko/20100101 Firefox/76.0",
@@ -207,14 +207,21 @@ feeder.on("error", (error) => {
 
 // Let's handle the aggregated RSS part
 if (config.rss.enabled === true) {
-  const rssUtils = new RssUtils(config);
+  const rssUtils = new RssGenerator(config);
   http
     .createServer((_req, res) => {
       res.writeHead(200, { "Content-Type": "application/xml" });
       // Upon each request, let's fetch the RSS feed string from util
-      rssUtils.createRSSFeed(config).then((rssFeed) => {
-        res.end(rssFeed);
-      });
+      rssUtils
+        .createRSSFeed(config)
+        .then((rssFeed) => {
+          res.end(rssFeed);
+        })
+        .catch((error) => {
+          logger.error({ error: error.message }, "Failed to generate RSS feed");
+          res.writeHead(500, { "Content-Type": "text/plain" });
+          res.end("Internal Server Error");
+        });
     })
     .listen(config.rss.port);
   logger.info({ port: config.rss.port }, "AlertHub RSS Feed server running");

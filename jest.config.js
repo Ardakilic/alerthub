@@ -9,7 +9,7 @@ export default {
   testPathIgnorePatterns: ["/node_modules/"],
   collectCoverageFrom: ["src/**/*.js", "!src/index.js", "!**/node_modules/**"],
   coverageDirectory: "coverage",
-  coverageReporters: ["text", "lcov", "html"],
+  coverageReporters: ["text", "lcov", "html", "json-summary"],
   testMatch: ["**/__tests__/**/*.js", "**/?(*.)+(spec|test).js"],
   coverageThreshold: {
     global: {
