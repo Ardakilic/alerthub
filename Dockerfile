@@ -1,25 +1,20 @@
 # Install npm packages
-FROM node:20-alpine AS builder
+FROM node:22.19.0 AS builder
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
 COPY package.json .
 
 RUN yarn install --prod
 
-# Push js files
-FROM node:20-alpine
+# Create the final image
+# FROM node:22-slim AS runner
+FROM gcr.io/distroless/nodejs22-debian12:nonroot
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
-LABEL maintainer="DantesBr <dantesbr@outlook.com>"
+COPY --from=builder /app /app
 
-COPY --from=builder /usr/src/app/ /usr/src/app/
+EXPOSE 3444
 
-COPY ./src ./src
-
-COPY ./package.json ./package.json
-
-COPY ./etc ./etc
-
-CMD ["node", "src/index.mjs"]
+CMD ["node", "src/index.js"]

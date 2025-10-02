@@ -1,15 +1,17 @@
-# App-spesific
+# App-specific
+.env
+
+# Repo-specificp-specific
 etc/config.js
 
-# Dependency directories
-node_modules/
-.test/
-
-package-lock.json
-*.md
-.eslintrc
+# Repo-specific
+.git
 .gitignore
 .editorconfig
-.dockerignore
+biome.json
+*.md
 Dockerfile
+LICENSE
 renovate.json
+node_modules
+npm-debug.log

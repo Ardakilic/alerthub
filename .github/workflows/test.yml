@@ -1,0 +1,89 @@
+name: Test Suite
+
+on:
+  pull_request:
+    branches: [ master ]
+  push:
+    branches: [ master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [22.19.0]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v5
+
+    - name: Setup Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v5
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Run tests with coverage
+      run: npm run test:coverage
+      env:
+        NODE_OPTIONS: --experimental-vm-modules
+
+    - name: Check coverage threshold
+      run: |
+        # Extract coverage percentage from JSON summary using jq
+        if [ -f "coverage/coverage-summary.json" ]; then
+          COVERAGE=$(jq '.total.lines.pct' coverage/coverage-summary.json)
+          echo "Coverage: $COVERAGE%"
+
+          # Detailed coverage report
+          echo "Coverage Report:"
+          echo "- Lines: $(jq '.total.lines.pct' coverage/coverage-summary.json)%"
+          echo "- Statements: $(jq '.total.statements.pct' coverage/coverage-summary.json)%"
+          echo "- Functions: $(jq '.total.functions.pct' coverage/coverage-summary.json)%"
+          echo "- Branches: $(jq '.total.branches.pct' coverage/coverage-summary.json)%"
+
+          # Check if coverage meets the 80% threshold using awk for decimal comparison
+          THRESHOLD=80
+          MEETS_THRESHOLD=$(echo "$COVERAGE $THRESHOLD" | awk '{print ($1 >= $2)}')
+
+          if [ "$MEETS_THRESHOLD" = "1" ]; then
+            echo "✅ Coverage meets requirement (≥${THRESHOLD}%): $COVERAGE%"
+          else
+            echo "❌ Coverage below requirement (<${THRESHOLD}%): $COVERAGE%"
+            exit 1
+          fi
+        else
+          echo "❌ Coverage summary file not found"
+          exit 1
+        fi
+
+    - name: Upload coverage reports
+      uses: codecov/codecov-action@v5
+      with:
+        file: ./coverage/lcov.info
+        flags: unittests
+        name: codecov-umbrella
+        fail_ci_if_error: false
+
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v5
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v5
+      with:
+        node-version: 22.x
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Run Biome linter
+      run: npx @biomejs/biome check src/

@@ -1,8 +1,32 @@
-# Changelog
+Changelog
+--------
 All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
+The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.1.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
+
+## [2.3.0] - 2024-10-14
+### Added
+- Telegram message support
+### Changed
+- Various ejs modifications rolled back.
+- Eslint changed to Biome.
+- Built dockerfile is now based on [Distroless](https://github.com/GoogleContainerTools/distroless).
+- The utils now only have the scope of their own configuration. So no other configuration values are passed to the individual notifier agents.
+### Removed
+- GitHub token passing is now deprecated, because of the lack of capabilities of the dependency [#80](https://github.com/Ardakilic/alerthub/issues/80)
+
+## [2.2.2] - 2022-09-25
+### Fixed
+- [#58](https://github.com/Ardakilic/alerthub/issues/57) Fixed broken RSS functionality.
+
+## [2.2.1] - 2022-09-25
+### Fixed
+- [#58](https://github.com/Ardakilic/alerthub/issues/57) Fixed broken RSS functionality.
+
+## [2.2.0] - 2022-09-24
+### Changed
+- [#57](https://github.com/Ardakilic/alerthub/issues/57) Switched to ES6 imports / Exports.
 
 ## [2.1.4] - 2021-01-07
 ### Fixed
