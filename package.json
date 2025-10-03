@@ -24,7 +24,7 @@
     "feed": "^5.1.0",
     "node-telegram-bot-api": "^0.66.0",
     "nodemailer": "^7.0.0",
-    "pino": "^9.9.5",
+    "pino": "^10.0.0",
     "pino-pretty": "^13.1.1",
     "pushbullet": "^3.0.0",
     "pushover-notifications": "^1.2.3",
