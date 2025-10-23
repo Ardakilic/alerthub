@@ -1,5 +1,5 @@
 # Install npm packages
-FROM node:22.19.0 AS builder
+FROM node:22.21.0 AS builder
 
 WORKDIR /app
 
